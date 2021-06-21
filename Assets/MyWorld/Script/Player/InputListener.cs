@@ -45,11 +45,13 @@ public class InputListener : MonoBehaviour
     public CKeyAxis2DEvent MoveAxis => moveAxis;
     public CKeyAxis2DEvent LookMove => lookMove;
     public UnityEvent JumpPressed => jumpPressed;
+    public UnityEvent InteractionPressed => interactionPressed;
 
 
     private readonly CKeyAxis2DEvent moveAxis = new CKeyAxis2DEvent();
     private readonly CKeyAxis2DEvent lookMove = new CKeyAxis2DEvent();
     private readonly UnityEvent jumpPressed = new UnityEvent();
+    private readonly UnityEvent interactionPressed = new UnityEvent();
 
 
     void Update()
@@ -59,6 +61,7 @@ public class InputListener : MonoBehaviour
         UpdateLookMove();
 
         UpdateJump();
+        UpdateInteraction();
     }
 
 
@@ -119,6 +122,13 @@ public class InputListener : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpPressed.Invoke();
+        }
+    }
+    void UpdateInteraction()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            interactionPressed.Invoke();
         }
     }
 

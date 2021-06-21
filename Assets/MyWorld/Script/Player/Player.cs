@@ -13,10 +13,12 @@ public class Player : MonoBehaviour
 
     // -- ÄÄÆ÷³ÍÆ®µé -- //
     private CharacterMovement movement;
+    private Interactor interactor;
 
     private void Awake()
     {
         movement = this.gameObject.AddComponent<CharacterMovement>();
+        interactor = this.gameObject.AddComponent<Interactor>();
 
         SpawnLooking();
         SpawnPlayerOnly();
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour
         playerOnly.Input.MoveAxis.AddListener(OnMoveAxis);
         playerOnly.Input.LookMove.AddListener(OnLookMove);
         playerOnly.Input.JumpPressed.AddListener(OnJump);
+        playerOnly.Input.InteractionPressed.AddListener(OnInteraction);
 
     }
 
@@ -50,6 +53,12 @@ public class Player : MonoBehaviour
     private void OnJump()
     {
         movement.Jump();
+    }
+
+    // playerOnly.Input.InteractionPressed.AddListener
+    private void OnInteraction()
+    {
+        interactor.InteractLast();
     }
 
 
