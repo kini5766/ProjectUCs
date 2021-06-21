@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
 public enum EInteractorType : ushort
 {
     Default = 0,
@@ -12,24 +13,46 @@ public enum EInteractorType : ushort
     NPC = 4,
 }
 
+
+[System.Serializable] public class CInteractionEvent : UnityEvent<Interactor> { }
+
+
 public class InteractorCollider : MonoBehaviour
 {
     public EInteractorType InteractorType { get => interactorType; set => interactorType = value; }
-    public UnityEvent Interaction => interaction;
     public string InteractorId => interactorId;
+    public string DisplayName => data.DisplayName;
+    public CInteractionEvent OnInteraction => onInteraction;
+    public CInteractionEvent OnConnect => onConnect;
+    public CInteractionEvent OffConnect => offConnect;
 
-
-    public void Interact()
+    public void Interaction(Interactor interactor)
     {
-        interaction.Invoke();
+        onInteraction.Invoke(interactor);
     }
 
 
     private EInteractorType interactorType;
     private readonly List<Interactor> connectings = new List<Interactor>();
-    private readonly UnityEvent interaction = new UnityEvent();
+    private readonly CInteractionEvent onInteraction = new CInteractionEvent();
+    private readonly CInteractionEvent onConnect = new CInteractionEvent();
+    private readonly CInteractionEvent offConnect = new CInteractionEvent();
     [SerializeField] private string interactorId;
+    private CInteractorDesc data;
 
+
+    private void Awake()
+    {
+        data = UCsWorld.GetDataTable().InteractorTable[interactorId];
+        if (data == null)
+        {
+            data = new CInteractorDesc
+            {
+                InteractorID = interactorId,
+                DisplayName = interactorId
+            };
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -37,6 +60,8 @@ public class InteractorCollider : MonoBehaviour
         {
             interactor.BeginConnect(this);
             connectings.Add(interactor);
+
+            onConnect.Invoke(interactor);
         }
 
     }
@@ -48,16 +73,9 @@ public class InteractorCollider : MonoBehaviour
             if (connectings.Remove(interactor))
             {
                 interactor.EndConnect(this);
+                offConnect.Invoke(interactor);
             }
         }
     }
 
-    private void OnDisable()
-    {
-        foreach (Interactor other in connectings)
-        {
-            other.EndConnect(this);
-        }
-        connectings.Clear();
-    }
 }

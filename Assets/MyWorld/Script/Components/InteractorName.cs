@@ -11,15 +11,18 @@ public class InteractorName : MonoBehaviour
 
     void Start()
     {
-        namePanel.SetNameText(interactor.InteractorId);
+        namePanel.SetNameText(interactor.DisplayName);
 
-        interactor.Interaction.AddListener(OnInteraction);
+        interactor.OnInteraction.AddListener(OnInteraction);
     }
 
-    void OnInteraction()
+    void OnInteraction(Interactor interactor)
     {
-        StopCoroutine(nameof(SetNameTest));
-        StartCoroutine(nameof(SetNameTest));
+        if (interactor.TryGetComponent<Player>(out _))
+        {
+            StopCoroutine(nameof(SetNameTest));
+            StartCoroutine(nameof(SetNameTest));
+        }
     }
 
     IEnumerator SetNameTest()
@@ -28,7 +31,7 @@ public class InteractorName : MonoBehaviour
 
         yield return delay2;
 
-        namePanel.SetNameText(interactor.InteractorId);
+        namePanel.SetNameText(interactor.DisplayName);
     }
-    
+
 }

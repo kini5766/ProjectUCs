@@ -5,12 +5,20 @@ using UnityEngine.UI;
 
 public class TextRenderer : MonoBehaviour
 {
-    [SerializeField] private Canvas canvas = null;
-    [SerializeField] private Text text = null;
-
     public void SetNameText(string value)
     {
         text.text = value;
+    }
+
+
+    [SerializeField] private Canvas canvas = null;
+    [SerializeField] private Text text = null;
+
+
+    private void Start()
+    {
+        if (canvas.worldCamera == null)
+            canvas.worldCamera = Camera.main;
     }
 
     private void Update()

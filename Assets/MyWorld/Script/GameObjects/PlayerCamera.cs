@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UCsWorld;
 
-public class LookingPlayer : MonoBehaviour
+public class PlayerCamera : MonoBehaviour
 {
     private void Start()
     {

@@ -24,7 +24,7 @@ public class Interactor : MonoBehaviour
             return;
         }
 
-        connectings[index].Interact();
+        connectings[index].Interaction(this);
     }
 
     public void InteractLast()
@@ -33,6 +33,7 @@ public class Interactor : MonoBehaviour
     }
 
     public int ConnectingCount => connectings.Count;
+
 
     private readonly List<InteractorCollider> connectings = new List<InteractorCollider>();
 

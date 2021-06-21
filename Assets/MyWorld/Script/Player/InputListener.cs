@@ -124,6 +124,7 @@ public class InputListener : MonoBehaviour
             jumpPressed.Invoke();
         }
     }
+
     void UpdateInteraction()
     {
         if (Input.GetMouseButtonDown(0))
