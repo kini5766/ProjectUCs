@@ -16,8 +16,6 @@ public class OrbitLooking : MonoBehaviour
             theta = lookupMin;
 
         sphereCoord.Theta = theta;
-
-        transform.rotation = sphereCoord.GetQuaternion();
     }
 
 
@@ -30,4 +28,8 @@ public class OrbitLooking : MonoBehaviour
         sphereCoord.SetQuaternion(transform.rotation);
     }
 
+    private void FixedUpdate()
+    {
+        this.transform.rotation = sphereCoord.GetQuaternion();
+    }
 }

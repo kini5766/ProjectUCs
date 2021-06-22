@@ -4,7 +4,7 @@ public class CharacterMovement : MonoBehaviour
 {
     public bool IsGround => isGround;
 
-    public float CurrSpeed { get => currSpeed; set => currSpeed = value; }
+    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
 
     // looking : 보고 있는 방향, keyAxis2D : 키보드 입력 값
     public void Move(Vector3 looking, Vector2 keyAxis2D)
@@ -39,7 +39,8 @@ public class CharacterMovement : MonoBehaviour
     private Rigidbody rigid;
 
     // -- 이동 -- //
-    [SerializeField] private float currSpeed = 6.0f;
+    [SerializeField] private float moveSpeed = 6.0f;
+    [SerializeField] private float turnSpeed = 360.0f;
     private Vector3 moveAxis;
 
     // -- 점프 -- //
@@ -62,14 +63,26 @@ public class CharacterMovement : MonoBehaviour
     {
         if (moveAxis != Vector3.zero)
         {
-            moveAxis *= currSpeed * Time.fixedDeltaTime;
+            // -- 이동 처리 -- //
 
-            rigid.MovePosition(transform.position + moveAxis);
+            rigid.MovePosition(transform.position + moveSpeed * Time.fixedDeltaTime * moveAxis);
 
+
+            // -- 회전 처리 -- //
+
+            Quaternion target = Quaternion.LookRotation(moveAxis.normalized, Vector3.up);
+
+            if (target != this.transform.rotation)
+            {
+                float deltaSpeed = turnSpeed * Time.fixedDeltaTime;
+                this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, target, deltaSpeed);
+            }
+
+            // 다음 입력 대기
             moveAxis = Vector3.zero;
         }
 
-
+        // -- 점프 처리 -- //
         if (rigid.velocity.y < 0.01f)
         {
             ray.direction = Vector3.down;
