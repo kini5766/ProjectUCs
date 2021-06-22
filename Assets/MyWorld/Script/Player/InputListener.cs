@@ -80,31 +80,11 @@ public class InputListener : MonoBehaviour
 
     void UpdateMove()
     {
-        // Forward
-        moveAxis.Value.y = 0.0f;
-        if (Input.GetKey(KeyCode.W))
-        {
-            moveAxis.Value.y += 1.0f;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            moveAxis.Value.y -= 1.0f;
-        }
-
-        // Right
-        moveAxis.Value.x = 0.0f;
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveAxis.Value.x -= 1.0f;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveAxis.Value.x += 1.0f;
-        }
+        moveAxis.Value.x = Input.GetAxis("Horizontal");
+        moveAxis.Value.y = Input.GetAxis("Vertical");
 
         // Event
         moveAxis.InvokeNotZero();
-
     }
 
     void UpdateLookMove()

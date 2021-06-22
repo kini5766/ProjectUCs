@@ -6,6 +6,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public GameObject Looking => looking.gameObject;
+    public PlayerOnlyComponent PlayerOnly => playerOnly;
+
+    public CharacterMovement Movement => movement;
+    public State State => state;
+    public Interactor Interactor => interactor;
+
 
     // -- 게임 오브젝트들 -- //
     private OrbitLooking looking;
@@ -13,11 +19,13 @@ public class Player : MonoBehaviour
 
     // -- 컴포넌트들 -- //
     private CharacterMovement movement;
+    private State state;
     private Interactor interactor;
 
     private void Awake()
     {
         movement = this.gameObject.AddComponent<CharacterMovement>();
+        state = this.gameObject.AddComponent<State>();
         interactor = this.gameObject.AddComponent<Interactor>();
 
         SpawnLooking();
@@ -31,13 +39,17 @@ public class Player : MonoBehaviour
         playerOnly.Input.JumpPressed.AddListener(OnJump);
         playerOnly.Input.InteractionPressed.AddListener(OnInteraction);
 
+        state.OnStateTypeChanged.AddListener(OnStateTypeChanged);
     }
 
 
     // playerOnly.Input.MoveAxis.AddListener
     private void OnMoveAxis(Vector2 axis2D)
     {
-        movement.Move(looking.transform, axis2D);
+        if (state.IsCanMove() == false)
+            return;
+
+        movement.Move(looking.transform.forward, axis2D);
     }
 
     // playerOnly.Input.LookMove.AddListener
@@ -61,6 +73,12 @@ public class Player : MonoBehaviour
         interactor.InteractLast();
     }
 
+    // state.OnStateTypeChanged
+    private void OnStateTypeChanged(EStateType oldType, EStateType newType)
+    {
+
+    }
+
 
     // looking 변수 셋팅
     private void SpawnLooking()
@@ -77,5 +95,6 @@ public class Player : MonoBehaviour
         go.transform.SetParent(this.transform, false);
         playerOnly = go.AddComponent<PlayerOnlyComponent>();
     }
+
 
 }

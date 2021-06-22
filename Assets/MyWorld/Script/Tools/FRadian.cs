@@ -5,7 +5,7 @@ using UnityEngine;
 // --
 // 각도 관련 간편 함수들
 // --
-public struct FRad
+public struct FRadian
 {
     // -- 정적 함수들 -- //
 
@@ -43,4 +43,13 @@ public struct FRad
 
 	    return new Vector3(xz2 + yw2, yz2 - xw2, 1.0f - xx2 - yy2);
     }
+
+
+    public static float GetRadian(in Vector3 value)
+    {
+        return -Mathf.Atan2(value.z, value.x) + Mathf.PI * 0.5f;
+    }
+
+    // -- 맴버들 -- //
+    
 }

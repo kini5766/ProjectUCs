@@ -9,7 +9,7 @@ public class UCsWorld : MonoBehaviour
 
     static public void SetPlayer(Player inPlayer) { instance.player = inPlayer; }
     static public Player GetPlayer() { return instance.player; }
-    static public DataTableManager GetDataTable() { return instance.dataTable; }
+    static public DataTableManager DataTable => instance.dataTable;
 
 
 

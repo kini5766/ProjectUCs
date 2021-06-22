@@ -1,27 +1,29 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
+using System.IO;
 
 [System.Serializable]
-public class CInteractorDesc
+public class CMentDesc
 {
-    public string InteractorID;
-    public string DisplayName;
+    public string MentID;
+    public string SpeakerInteractorID;
+    public string Ment;
+    public string NextMentID;
 }
 
-[CreateAssetMenu(fileName = "InteractorList", menuName = "ScriptableObjects/InteractorTable")]
-public class SInteractorTable : ScriptableObject
+[CreateAssetMenu(fileName = "MentList", menuName = "ScriptableObjects/MentTable")]
+public class SMentTable : ScriptableObject
 {
-    public CInteractorDesc this[string interactorID]
+    public CMentDesc this[string interactorID]
     {
         get { return GetData(interactorID); }
     }
 
-    public CInteractorDesc GetData(string interactorID)
+    public CMentDesc GetData(string MentID)
     {
-        foreach (CInteractorDesc data in dataTable)
+        foreach (CMentDesc data in dataTable)
         {
-            if (data.InteractorID == interactorID)
+            if (data.MentID == MentID)
             {
                 return data;
             }
@@ -31,9 +33,8 @@ public class SInteractorTable : ScriptableObject
     }
 
 
-
     [SerializeField]
-    private List<CInteractorDesc> dataTable = new List<CInteractorDesc>();
+    private List<CMentDesc> dataTable = new List<CMentDesc>();
 
 
     [ContextMenu("SaveJson")]
@@ -48,7 +49,7 @@ public class SInteractorTable : ScriptableObject
     public void LoadJson()
     {
         string json = File.ReadAllText(Application.dataPath + URI.JSON + "/InteractorList.json");
-        
+
         JsonUtility.FromJsonOverwrite(json, this);
     }
 

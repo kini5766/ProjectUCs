@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static UCsWorld;
 
 
 public enum EInteractorType : ushort
@@ -43,7 +44,7 @@ public class InteractorCollider : MonoBehaviour
 
     private void Awake()
     {
-        data = UCsWorld.GetDataTable().InteractorTable[interactorId];
+        data = DataTable.InteractorTable[interactorId];
         if (data == null)
         {
             data = new CInteractorDesc

@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class PlayerOnlyComponent : MonoBehaviour
 {
-    public InputListener Input;
-    public Option Option;
+    public Player Player => player;
+    public InputListener Input => input;
+    public Option Option => option;
+    public Literacy Literacy => literacy;
+
+
+    private Player player;
+    private InputListener input;
+    private Option option;
+    private Literacy literacy;
 
     private void Awake()
     {
-        Input = gameObject.AddComponent<InputListener>();
-        Option = gameObject.AddComponent<Option>();
+        player = transform.parent.GetComponent<Player>();
+        input = gameObject.AddComponent<InputListener>();
+        option = gameObject.AddComponent<Option>();
+        literacy = gameObject.AddComponent<Literacy>();
     }
 }

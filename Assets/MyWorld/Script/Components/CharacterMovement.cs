@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
@@ -8,18 +6,24 @@ public class CharacterMovement : MonoBehaviour
 
     public float CurrSpeed { get => currSpeed; set => currSpeed = value; }
 
-    // looking : 보고 있는 방향, axis2D : 키보드 입력 값
-    public void Move(Transform looking, Vector2 axis2D)
+    // looking : 보고 있는 방향, keyAxis2D : 키보드 입력 값
+    public void Move(Vector3 looking, Vector2 keyAxis2D)
     {
-        if (axis2D.sqrMagnitude > 1.0f)
-            axis2D.Normalize();
+        float sqrMagnitude = keyAxis2D.sqrMagnitude;
+        if (sqrMagnitude > 1.0f)
+        {
+            // normalize (최대 길이 1로 설정)
+            keyAxis2D /= Mathf.Sqrt(sqrMagnitude);
+        }
 
-        Vector3 forword = looking.transform.forward;
+        // 보고 있는 방향의 앞쪽 (y 축 제거)
+        Vector3 forword = looking;
         forword.y = 0.0f;
         forword.Normalize();
         Vector3 right = new Vector3(forword.z, 0.0f, -forword.x);
 
-        moveAxis = forword * axis2D.y + right * axis2D.x;
+        // 계산 결과
+        moveAxis = forword * keyAxis2D.y + right * keyAxis2D.x;
     }
 
     public void Jump()

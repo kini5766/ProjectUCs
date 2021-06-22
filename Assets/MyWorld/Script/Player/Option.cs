@@ -10,3 +10,4 @@ public class Option : MonoBehaviour
     public float MouseLookUpRate { get => mouseLookRate; set => mouseLookRate = value; }
     public float MouseTurnRate { get => mouseTurnRate; set => mouseTurnRate = value; }
 }
+
