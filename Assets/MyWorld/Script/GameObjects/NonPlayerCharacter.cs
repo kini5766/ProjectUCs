@@ -7,8 +7,6 @@ public class NonPlayerCharacter : MonoBehaviour
 {
     [SerializeField] private NpcLooking npcLooking = null;
     [SerializeField] private InteractorCollider interactor = null;
-    private readonly WaitForSeconds delay2 = new WaitForSeconds(2.0f);
-    private readonly string testText = "안녕";
     private Talkable talkable;
     private State state;
     private Player connectingPlayer;
@@ -21,6 +19,9 @@ public class NonPlayerCharacter : MonoBehaviour
 
     private void Start()
     {
+        talkable.FirstMentID = interactor.InteractorId;
+
+
         npcLooking.SetNameText(interactor.DisplayName);
 
         interactor.OnInteraction.AddListener(OnInteraction);
@@ -60,18 +61,18 @@ public class NonPlayerCharacter : MonoBehaviour
 
         if (interactor.TryGetComponent(out Player player))
         {
-            //Literacy literacy = player.PlayerOnly.Literacy;
-            //if (literacy.BeginTalk(talkable) == false)
-            //{
-            //    return;
-            //}
+            Literacy literacy = player.PlayerOnly.Literacy;
+            if (literacy.BeginTalk(talkable) == false)
+            {
+                return;
+            }
 
             // 플레이어쪽으로 몸을 돌리기
             Vector3 dir = player.transform.position - this.transform.position;
             float deg = FRadian.GetRadian(dir) * Mathf.Rad2Deg;
             this.transform.rotation = Quaternion.Euler(new Vector3(0.0f, deg, 0.0f));
 
-            // state.SetTalkMode();
+            state.SetTalkMode();
         }
     }
 
@@ -81,13 +82,4 @@ public class NonPlayerCharacter : MonoBehaviour
         state.SetIdleMode();
     }
 
-    // OnInteraction
-    private IEnumerator SetNameTest()
-    {
-        npcLooking.SetNameText(testText);
-
-        yield return delay2;
-
-        npcLooking.SetNameText(interactor.DisplayName);
-    }
 }

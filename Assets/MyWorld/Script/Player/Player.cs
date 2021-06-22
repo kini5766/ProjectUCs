@@ -70,7 +70,27 @@ public class Player : MonoBehaviour
     // playerOnly.Input.InteractionPressed.AddListener
     private void OnInteraction()
     {
-        interactor.InteractLast();
+        if (state.IsTalkMode())
+        {
+            playerOnly.Literacy.NextTalk();
+            return;
+        }
+
+        if (state.IsIdleMode())
+        {
+            InteractorCollider other = interactor.GetInteractLast();
+
+            if (other != null)
+            {
+                // 상대 인터렉션쪽으로 몸을 돌리기
+                Vector3 dir = other.transform.position - this.transform.position;
+                float deg = FRadian.GetRadian(dir) * Mathf.Rad2Deg;
+                this.transform.rotation = Quaternion.Euler(new Vector3(0.0f, deg, 0.0f));
+
+                other.Interaction(interactor);
+            }
+
+        }
     }
 
     // state.OnStateTypeChanged

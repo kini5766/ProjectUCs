@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ab1260abe60c9f4f86c9c641046154a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactorId: NPC0
+  interactorId: NPC1
 --- !u!65 &82975158
 BoxCollider:
   m_ObjectHideFlags: 0

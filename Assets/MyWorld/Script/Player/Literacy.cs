@@ -16,17 +16,17 @@ public class Literacy : MonoBehaviour
         contacted = other;
 
         state.SetTalkMode();
+        state.SetStop();
         contacted.BeginTalk(this);
 
-        // menu.OpenTalk()
-        NextTalk();
+        GetHUD().OpenTalk();
 
-        return true;
+        return NextTalk();
     }
 
     public void CancelTalk()
     {
-        // menu.CloseTalk();
+        GetHUD().CloseTalk();
 
         if (contacted == null)
         {
@@ -37,15 +37,16 @@ public class Literacy : MonoBehaviour
         contacted = null;
 
         state.SetIdleMode();
+        state.SetMove();
         old.EndTalk();
     }
 
-    public void NextTalk()
+    public bool NextTalk()
     {
         if (contacted == null)
         {
             CancelTalk();
-            return;
+            return false;
         }
 
         CMentDesc ment = DataTable.MentTable[contacted.CurrMentID];
@@ -53,17 +54,18 @@ public class Literacy : MonoBehaviour
         if (ment == null)
         {
             CancelTalk();
-            return;
+            return false;
         }
 
         string name = DataTable.InteractorTable[ment.SpeakerInteractorID].DisplayName;
 
         contacted.TalkNext(ment.NextMentID);
-        // menu.SetTalkMent(name, ment.Ment)
+        GetHUD().SetTalkMent(name, ment.Ment);
+
+        return true;
     }
 
     private State state;
-    // private Menu;
 
     private Talkable contacted;
 

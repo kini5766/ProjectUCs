@@ -17,19 +17,19 @@ public class Interactor : MonoBehaviour
         connectings.Remove(other);
     }
 
-    public void Interact(int index)
+    public InteractorCollider GetInteract(int index)
     {
         if (index < 0 || index >= ConnectingCount)
         {
-            return;
+            return null;
         }
 
-        connectings[index].Interaction(this);
+        return connectings[index];
     }
 
-    public void InteractLast()
+    public InteractorCollider GetInteractLast()
     {
-        Interact(ConnectingCount - 1);
+        return GetInteract(ConnectingCount - 1);
     }
 
     public int ConnectingCount => connectings.Count;

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: InteractorList
   m_EditorClassIdentifier: 
   dataTable:
-  - InteractorID: NPC0
-    DisplayName: "\uD0DC\uCD08 NPC"
-  - InteractorID: Chest
-    DisplayName: "\uBCF4\uBB3C\uC0C1\uC790"
+  - InteractorID: Default
+    DisplayName: ???
+  - InteractorID: Player
+    DisplayName: "\uB098"
+  - InteractorID: NPC1
+    DisplayName: "\uD0DC\uC870 \uC8FC\uBBFC"

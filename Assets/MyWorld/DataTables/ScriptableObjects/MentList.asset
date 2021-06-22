@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed31561f8a22a5d48ac725ff348eafd1, type: 3}
+  m_Name: MentList
+  m_EditorClassIdentifier: 
+  dataTable:
+  - MentID: NPC1
+    SpeakerInteractorID: NPC1
+    Ment: "\uC5B4\uC11C\uC640~"
+    NextMentID: NPC1_1
+  - MentID: NPC1_1
+    SpeakerInteractorID: NPC1
+    Ment: "\uC5EC\uAE34 \uCC98\uC74C\uC774\uC9C0?"
+    NextMentID: NPC1_2
+  - MentID: NPC1_2
+    SpeakerInteractorID: Player
+    Ment: "\uC751!"
+    NextMentID: 

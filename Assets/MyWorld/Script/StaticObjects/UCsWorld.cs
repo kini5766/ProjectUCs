@@ -9,6 +9,7 @@ public class UCsWorld : MonoBehaviour
 
     static public void SetPlayer(Player inPlayer) { instance.player = inPlayer; }
     static public Player GetPlayer() { return instance.player; }
+    static public HUD GetHUD() { return instance.hud; }
     static public DataTableManager DataTable => instance.dataTable;
 
 
@@ -23,7 +24,7 @@ public class UCsWorld : MonoBehaviour
 
     private Player player;
     private DataTableManager dataTable;
-
+    private HUD hud;
 
 
     // -- ¸É¹ö ÇÔ¼öµé -- //
@@ -34,6 +35,7 @@ public class UCsWorld : MonoBehaviour
 
         player = transform.Find(nameof(Player)).GetComponent<Player>();
         dataTable = transform.Find(nameof(DataTableManager)).GetComponent<DataTableManager>();
+        hud = transform.Find(nameof(HUD)).GetComponent<HUD>();
     }
 
 }

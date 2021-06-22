@@ -42,13 +42,13 @@ public class SMentTable : ScriptableObject
     {
         string json = JsonUtility.ToJson(this);
 
-        File.WriteAllText(Application.dataPath + URI.JSON + "/InteractorList.json", json);
+        File.WriteAllText(Application.dataPath + URI.JSON + "/" + name + ".json", json);
     }
 
     [ContextMenu("LoadJson")]
     public void LoadJson()
     {
-        string json = File.ReadAllText(Application.dataPath + URI.JSON + "/InteractorList.json");
+        string json = File.ReadAllText(Application.dataPath + URI.JSON + "/" + name + ".json");
 
         JsonUtility.FromJsonOverwrite(json, this);
     }

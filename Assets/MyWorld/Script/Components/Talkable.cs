@@ -10,7 +10,7 @@ public class CTalk : UnityEvent<string> { }
 
 public class Talkable : MonoBehaviour
 {
-    public string FirstMentID { get => firstMentID; set => firstMentID = value; }
+    public string FirstMentID { get => firstMentID; set => SetFirstMentID(value); }
     public string CurrMentID  => currMentID;
     public CTalk OnNextTalk => nextTalk;
     public CTalk OnEndTalk => endTalk;
@@ -50,17 +50,14 @@ public class Talkable : MonoBehaviour
     private readonly CTalk nextTalk = new CTalk();
     private readonly CTalk endTalk = new CTalk();
 
+    private void SetFirstMentID(string value)
+    {
+        firstMentID = value;
+        currMentID = firstMentID;
+    }
 
     private void Start()
     {
-        if (firstMentID.Length == 0)
-        {
-            if (TryGetComponent(out InteractorCollider interactor))
-            {
-                firstMentID = interactor.InteractorId;
-            }
-        }
-
         currMentID = firstMentID;
     }
 
