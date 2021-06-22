@@ -83,9 +83,9 @@ public class Player : MonoBehaviour
     // looking 변수 셋팅
     private void SpawnLooking()
     {
-        GameObject go = new GameObject("Looking");
-        go.transform.SetParent(this.transform, false);
+        GameObject go = new GameObject("Player Looking");
         looking = go.AddComponent<OrbitLooking>();
+        looking.SetFocus(this.transform);
     }
 
     // playerOnly 변수 셋팅

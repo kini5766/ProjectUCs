@@ -74,8 +74,8 @@ public class CharacterMovement : MonoBehaviour
 
             if (target != this.transform.rotation)
             {
-                float deltaSpeed = turnSpeed * Time.fixedDeltaTime;
-                this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, target, deltaSpeed);
+                float deltaSpeed = turnSpeed * Time.fixedDeltaTime * moveAxis.sqrMagnitude;
+                rigid.rotation = Quaternion.RotateTowards(rigid.rotation, target, deltaSpeed);
             }
 
             // 다음 입력 대기
