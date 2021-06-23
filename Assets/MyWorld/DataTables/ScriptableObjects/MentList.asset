@@ -25,3 +25,20 @@ MonoBehaviour:
     SpeakerInteractorID: Player
     Ment: "\uC751!"
     NextMentID: 
+  - MentID: LookedChest
+    SpeakerInteractorID: 
+    Ment: "\uC7A0\uACA8\uC788\uB2E4."
+    NextMentID: 
+  - MentID: NPC2
+    SpeakerInteractorID: NPC2
+    Ment: "\uC5EC\uC5B4"
+    NextMentID: NPC2_1
+  - MentID: NPC2_1
+    SpeakerInteractorID: NPC2
+    Ment: "\uC774 \uACC4\uB2E8\uC740 \uC815\uB9D0 \uC544\uB984\uB2F5\uC9C0?"
+    NextMentID: NPC2_2
+  - MentID: NPC2_2
+    SpeakerInteractorID: NPC2
+    Ment: "\uC0AC\uC2E4 \uC774 \uACC4\uB2E8\uC5D0\uB294 \uBB34\uC5B8\uAC00 \uBE44\uBC00\uC774
+      \uC228\uACA8\uC838\uC788\uB2E4\uACE0 \uD574"
+    NextMentID: 

@@ -57,7 +57,11 @@ public class Literacy : MonoBehaviour
             return false;
         }
 
-        string name = DataTable.InteractorTable[ment.SpeakerInteractorID].DisplayName;
+        CInteractorDesc desc = DataTable.InteractorTable[ment.SpeakerInteractorID];
+
+        string name = "";
+        if (desc != null)
+            name = desc.DisplayName;
 
         contacted.TalkNext(ment.NextMentID);
         GetHUD().SetTalkMent(name, ment.Ment);

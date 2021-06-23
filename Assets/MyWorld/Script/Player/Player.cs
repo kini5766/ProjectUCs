@@ -104,6 +104,7 @@ public class Player : MonoBehaviour
     private void SpawnLooking()
     {
         GameObject go = new GameObject("Player Looking");
+        go.transform.position = new Vector3(0.0f, 2.0f, 0.0f);
         looking = go.AddComponent<OrbitLooking>();
         looking.SetFocus(this.transform);
     }

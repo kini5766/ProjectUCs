@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    public bool IsGround => isGround;
+    public bool IsGround => controller.isGrounded;
 
     public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
 
@@ -28,44 +28,52 @@ public class CharacterMovement : MonoBehaviour
 
     public void Jump()
     {
-        if (isGround == false)
-            return;
-
-        rigid.AddForce(new Vector3(0.0f, jumpForce, 0.0f), ForceMode.Impulse);
+        bOnJump = true;
     }
 
 
     // -- 기본 -- //
-    private Rigidbody rigid;
+    private CharacterController controller;
+    private Vector3 velocity;
 
     // -- 이동 -- //
     [SerializeField] private float moveSpeed = 6.0f;
     [SerializeField] private float turnSpeed = 360.0f;
     private Vector3 moveAxis;
-
-    // -- 점프 -- //
-    [SerializeField] private float jumpForce = 10.0f;
-    private bool isGround = true;
-    private Ray ray = new Ray();
-    private float radius;
-    private float maxDistance;
+    [SerializeField] private float jumpForce = 7.0f;
+    private bool bOnJump = false;
 
 
     void Start()
     {
-        rigid = GetComponent<Rigidbody>();
-        CapsuleCollider capsule = GetComponent<CapsuleCollider>();
-        radius = capsule.radius * 0.5f;
-        maxDistance = capsule.height * 0.5f - capsule.center.y;
+        controller = GetComponent<CharacterController>();
     }
 
     private void FixedUpdate()
     {
+        if ((controller.collisionFlags & CollisionFlags.Below) != 0)
+        {
+            if (velocity.y < 0.0f)
+            {
+                velocity.y = 0.0f;
+            }
+        }
+        else if ((controller.collisionFlags & CollisionFlags.Above) != 0)
+        {
+            if (velocity.y > 0.0f)
+            {
+                velocity.y = 0;
+            }
+        }
+
+        velocity.x = 0.0f;
+        velocity.z = 0.0f;
+
         if (moveAxis != Vector3.zero)
         {
             // -- 이동 처리 -- //
 
-            rigid.MovePosition(transform.position + moveSpeed * Time.fixedDeltaTime * moveAxis);
+            velocity += moveSpeed * moveAxis;
 
 
             // -- 회전 처리 -- //
@@ -75,26 +83,28 @@ public class CharacterMovement : MonoBehaviour
             if (target != this.transform.rotation)
             {
                 float deltaSpeed = turnSpeed * Time.fixedDeltaTime * moveAxis.sqrMagnitude;
-                rigid.rotation = Quaternion.RotateTowards(rigid.rotation, target, deltaSpeed);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, target, deltaSpeed);
             }
 
             // 다음 입력 대기
             moveAxis = Vector3.zero;
         }
 
-        // -- 점프 처리 -- //
-        if (rigid.velocity.y < 0.01f)
-        {
-            ray.direction = Vector3.down;
-            ray.origin = this.transform.position;
+        velocity += Time.fixedDeltaTime * Physics.gravity;
 
-            isGround = Physics.SphereCast(ray, radius, maxDistance);
-        }
-        else if (rigid.velocity.y > 0.01f)
+
+        if (bOnJump)
         {
-            isGround = false;
+            bOnJump = false;
+
+            if (controller.isGrounded)
+                velocity.y = jumpForce;
         }
+
+
+        controller.Move(Time.fixedDeltaTime * velocity);
 
     }
+
 
 }
