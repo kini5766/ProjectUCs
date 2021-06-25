@@ -11,8 +11,16 @@ public class HudTalkable : MonoBehaviour
 
     public void SetMent(string name, string ment)
     {
-        leftNameArea.SetActive(name.Length != 0);
-        text_leftName.text = name;
+        if (name.Length == 0)
+        {
+            leftNameArea.transform.SetParent(HUD.HiddenViewer, true);
+        }
+        else
+        {
+            leftNameArea.transform.SetParent(gameObject.transform, true);
+            text_leftName.text = name;
+        }
+
         text_ment.text = ment;
     }
 

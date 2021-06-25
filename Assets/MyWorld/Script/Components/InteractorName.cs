@@ -5,7 +5,7 @@ using UnityEngine;
 public class InteractorName : MonoBehaviour
 {
     [SerializeField] private InteractorCollider interactor = null;
-    [SerializeField] private TextRenderer namePanel = null;
+    [SerializeField] private TextViewer namePanel = null;
     private readonly WaitForSeconds delay2 = new WaitForSeconds(2.0f);
     private readonly string testText = "¾È³ç";
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UCsWorld;
 
 public class Player : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
         playerOnly.Input.LookMove.AddListener(OnLookMove);
         playerOnly.Input.JumpPressed.AddListener(OnJump);
         playerOnly.Input.InteractionPressed.AddListener(OnInteraction);
+        playerOnly.Input.MenuPressed.AddListener(OnMenu);
 
         state.OnStateTypeChanged.AddListener(OnStateTypeChanged);
     }
@@ -82,14 +84,24 @@ public class Player : MonoBehaviour
 
             if (other != null)
             {
-                // 상대 인터렉션쪽으로 몸을 돌리기
-                Vector3 dir = other.transform.position - this.transform.position;
-                float deg = FRadian.GetRadian(dir) * Mathf.Rad2Deg;
-                this.transform.rotation = Quaternion.Euler(new Vector3(0.0f, deg, 0.0f));
-
                 other.Interaction(interactor);
             }
 
+        }
+    }
+
+    // playerOnly.Input.MenuPressed.AddListener
+    private void OnMenu()
+    {
+        if (GetHUD().IsOpenedInventory())
+        {
+            playerOnly.Input.HiddenMouse();
+            GetHUD().CloseInventory();
+        }
+        else
+        {
+            playerOnly.Input.VisibleMouse();
+            GetHUD().OpenInventory();
         }
     }
 

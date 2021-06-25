@@ -2,26 +2,39 @@
 using System.IO;
 using UnityEngine;
 
-[System.Serializable]
-public class CInteractorDesc
+public enum EItemType : ushort
 {
-    public string InteractorID;
-    public string DisplayName;
+    None, Equipment, Consumable
 }
 
-[CreateAssetMenu(fileName = "InteractorList", menuName = "ScriptableObjects/InteractorTable")]
-public class SInteractorTable : ScriptableObject
+public enum EEquipmentType : ushort
 {
-    public CInteractorDesc this[string id]
+    None, Weapon, Armor, Accessory
+}
+
+[System.Serializable]
+public class CInventroyItemDesc
+{
+    public string ItemID;
+    public EItemType ItemType;
+    public string DetailDescription;
+}
+
+
+[CreateAssetMenu(fileName = "InventoryItemList", menuName = "ScriptableObjects/InventoryItemTable")]
+public class SInventoryItemTable : ScriptableObject
+{
+
+    public CInventroyItemDesc this[string id]
     {
         get { return GetData(id); }
     }
 
-    public CInteractorDesc GetData(string id)
+    public CInventroyItemDesc GetData(string id)
     {
-        foreach (CInteractorDesc data in dataTable)
+        foreach (CInventroyItemDesc data in dataTable)
         {
-            if (data.InteractorID == id)
+            if (data.ItemID == id)
             {
                 return data;
             }
@@ -33,7 +46,7 @@ public class SInteractorTable : ScriptableObject
 
 
     [SerializeField]
-    private List<CInteractorDesc> dataTable = new List<CInteractorDesc>();
+    private List<CInventroyItemDesc> dataTable = new List<CInventroyItemDesc>();
 
 
     [ContextMenu("SaveJson")]

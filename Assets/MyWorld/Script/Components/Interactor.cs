@@ -37,4 +37,14 @@ public class Interactor : MonoBehaviour
 
     private readonly List<InteractorCollider> connectings = new List<InteractorCollider>();
 
+
+    private void OnDisable()
+    {
+        foreach (InteractorCollider interactor in connectings)
+        {
+            interactor.EndConnect(this);
+        }
+        connectings.Clear();
+    }
+
 }

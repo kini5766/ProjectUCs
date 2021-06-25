@@ -21,7 +21,7 @@ public enum EInteractorType : ushort
 public class InteractorCollider : MonoBehaviour
 {
     public EInteractorType InteractorType { get => interactorType; set => interactorType = value; }
-    public string InteractorId => interactorId;
+    public string ID => interactorId;
     public string DisplayName => data.DisplayName;
     public CInteractionEvent OnInteraction => onInteraction;
     public CInteractionEvent OnConnect => onConnect;
@@ -30,6 +30,25 @@ public class InteractorCollider : MonoBehaviour
     public void Interaction(Interactor interactor)
     {
         onInteraction.Invoke(interactor);
+    }
+
+    public void SetID(string newInteractorID)
+    {
+        interactorId = newInteractorID;
+        data = DataTable.InteractorTable[interactorId];
+        if (data == null)
+        {
+            data = new CInteractorDesc
+            {
+                InteractorID = interactorId,
+                DisplayName = interactorId
+            };
+        }
+    }
+
+    public void EndConnect(Interactor other)
+    {
+        connectings.Remove(other);
     }
 
 
@@ -42,17 +61,10 @@ public class InteractorCollider : MonoBehaviour
     private CInteractorDesc data;
 
 
-    private void Awake()
+    private void Start()
     {
-        data = DataTable.InteractorTable[interactorId];
         if (data == null)
-        {
-            data = new CInteractorDesc
-            {
-                InteractorID = interactorId,
-                DisplayName = interactorId
-            };
-        }
+            SetID(interactorId);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -77,6 +89,16 @@ public class InteractorCollider : MonoBehaviour
                 offConnect.Invoke(interactor);
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        foreach (Interactor interactor in connectings)
+        {
+            interactor.EndConnect(this);
+            offConnect.Invoke(interactor);
+        }
+        connectings.Clear();
     }
 
 }

@@ -42,16 +42,30 @@ public class CKeyAxis2DEvent : UnityEvent<Vector2>
 
 public class InputListener : MonoBehaviour
 {
+    public void VisibleMouse() 
+    {
+        bMouseVisible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    public void HiddenMouse() 
+    {
+        bMouseVisible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public CKeyAxis2DEvent MoveAxis => moveAxis;
     public CKeyAxis2DEvent LookMove => lookMove;
     public UnityEvent JumpPressed => jumpPressed;
     public UnityEvent InteractionPressed => interactionPressed;
+    public UnityEvent MenuPressed => menuPressed;
 
 
+    private bool bMouseVisible = false;
     private readonly CKeyAxis2DEvent moveAxis = new CKeyAxis2DEvent();
     private readonly CKeyAxis2DEvent lookMove = new CKeyAxis2DEvent();
     private readonly UnityEvent jumpPressed = new UnityEvent();
     private readonly UnityEvent interactionPressed = new UnityEvent();
+    private readonly UnityEvent menuPressed = new UnityEvent();
 
 
     void Update()
@@ -62,18 +76,22 @@ public class InputListener : MonoBehaviour
 
         UpdateJump();
         UpdateInteraction();
+        UpdateMenu();
     }
 
 
     void UpdateCursorState()
     {
-        if (Input.GetKey(KeyCode.LeftAlt))
+        if (bMouseVisible == false)
         {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
+            if (Input.GetKey(KeyCode.LeftAlt))
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
 
@@ -110,6 +128,14 @@ public class InputListener : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             interactionPressed.Invoke();
+        }
+    }
+
+    private void UpdateMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            menuPressed.Invoke();
         }
     }
 

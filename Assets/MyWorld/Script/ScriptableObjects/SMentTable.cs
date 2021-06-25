@@ -14,16 +14,16 @@ public class CMentDesc
 [CreateAssetMenu(fileName = "MentList", menuName = "ScriptableObjects/MentTable")]
 public class SMentTable : ScriptableObject
 {
-    public CMentDesc this[string interactorID]
+    public CMentDesc this[string id]
     {
-        get { return GetData(interactorID); }
+        get { return GetData(id); }
     }
 
-    public CMentDesc GetData(string MentID)
+    public CMentDesc GetData(string id)
     {
         foreach (CMentDesc data in dataTable)
         {
-            if (data.MentID == MentID)
+            if (data.MentID == id)
             {
                 return data;
             }

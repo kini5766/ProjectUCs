@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: MentList
   m_EditorClassIdentifier: 
   dataTable:
+  - MentID: LookedChest
+    SpeakerInteractorID: 
+    Ment: "\uC7A0\uACA8\uC788\uB2E4."
+    NextMentID: 
   - MentID: NPC1
     SpeakerInteractorID: NPC1
     Ment: "\uC5B4\uC11C\uC640~"
@@ -24,10 +28,6 @@ MonoBehaviour:
   - MentID: NPC1_2
     SpeakerInteractorID: Player
     Ment: "\uC751!"
-    NextMentID: 
-  - MentID: LookedChest
-    SpeakerInteractorID: 
-    Ment: "\uC7A0\uACA8\uC788\uB2E4."
     NextMentID: 
   - MentID: NPC2
     SpeakerInteractorID: NPC2

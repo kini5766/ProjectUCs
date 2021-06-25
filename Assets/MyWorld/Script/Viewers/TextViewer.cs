@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TextRenderer : MonoBehaviour
+public class TextViewer : MonoBehaviour
 {
     public void SetNameText(string value)
     {
