@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
 
     // -- 게임 오브젝트들 -- //
-    private OrbitLooking looking;
+    private OrbitLooker looking;
     private PlayerOnlyComponent playerOnly;
 
     // -- 컴포넌트들 -- //
@@ -80,13 +80,7 @@ public class Player : MonoBehaviour
 
         if (state.IsIdleMode())
         {
-            InteractorCollider other = interactor.GetInteractLast();
-
-            if (other != null)
-            {
-                other.Interaction(interactor);
-            }
-
+            interactor.Interaction();
         }
     }
 
@@ -117,7 +111,7 @@ public class Player : MonoBehaviour
     {
         GameObject go = new GameObject("Player Looking");
         go.transform.position = new Vector3(0.0f, 2.0f, 0.0f);
-        looking = go.AddComponent<OrbitLooking>();
+        looking = go.AddComponent<OrbitLooker>();
         looking.SetFocus(this.transform);
     }
 

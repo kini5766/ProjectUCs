@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OrbitLooking : MonoBehaviour
+public class OrbitLooker : MonoBehaviour
 {
     public void SetFocus(Transform value)
     {

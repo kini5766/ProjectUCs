@@ -6,21 +6,25 @@ public class TalkableProp : MonoBehaviour
 {
     [SerializeField] private string propID;
     [SerializeField] private InteractorCollider interactor = null;
-    [SerializeField] private TextViewer text = null;
+    [SerializeField] private NameViewer nameViewer = null;
     private Talkable talkable;
 
     private void Awake()
     {
         talkable = gameObject.AddComponent<Talkable>();
         interactor.SetID(propID);
+
+        nameViewer.SetNormal();
     }
 
     private void Start()
     {
         talkable.FirstMentID = interactor.ID;
-        interactor.OnInteraction.AddListener(OnInteraction);
+        nameViewer.SetNameText(interactor.DisplayName);
 
-        text.SetNameText(interactor.DisplayName);
+        interactor.OnInteraction.AddListener(OnInteraction);
+        interactor.OnFocus.AddListener((_) => { nameViewer.SetFocus(); });
+        interactor.OffFocus.AddListener((_) => { nameViewer.SetNormal(); });
     }
 
     // interactor.OnInteraction

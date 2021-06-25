@@ -6,7 +6,8 @@ using UnityEngine;
 public class NonPlayerCharacter : MonoBehaviour
 {
     [SerializeField] private string npcID;
-    [SerializeField] private NpcLooking npcLooking = null;
+    [SerializeField] private LookerNpc npcLooking = null;
+    [SerializeField] private NameViewer nameViewer = null;
     [SerializeField] private InteractorCollider interactor = null;
     private Talkable talkable;
     private State state;
@@ -18,17 +19,21 @@ public class NonPlayerCharacter : MonoBehaviour
         state = gameObject.AddComponent<State>();
 
         interactor.SetID(npcID);
+
+        nameViewer.SetNormal();
     }
 
     private void Start()
     {
         talkable.FirstMentID = interactor.ID;
 
-        npcLooking.SetNameText(interactor.DisplayName);
+        nameViewer.SetNameText(interactor.DisplayName);
 
         interactor.OnInteraction.AddListener(OnInteraction);
         interactor.OnConnect.AddListener(OnConnected);
         interactor.OffConnect.AddListener(OffConnected);
+        interactor.OnFocus.AddListener((_) => { nameViewer.SetFocus(); });
+        interactor.OffFocus.AddListener((_) => { nameViewer.SetNormal(); });
 
         talkable.OnEndTalk.AddListener(OnEndTalk);
     }

@@ -3,13 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NpcLooking : MonoBehaviour
+public class LookerNpc : MonoBehaviour
 {
-    public void SetNameText(string value)
-    {
-        text.text = value;
-    }
-
     public void SetLookingObject(GameObject value)
     {
         lookingObject = value;
@@ -21,7 +16,6 @@ public class NpcLooking : MonoBehaviour
     }
 
 
-    [SerializeField] private Text text = null;
     [SerializeField] private float lookingSpeed = 90.0f;
     private GameObject lookingObject;
 

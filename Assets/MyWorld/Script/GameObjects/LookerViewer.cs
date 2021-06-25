@@ -1,19 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class TextViewer : MonoBehaviour
+public class LookerViewer : MonoBehaviour
 {
-    public void SetNameText(string value)
-    {
-        text.text = value;
-    }
-
-
     [SerializeField] private Canvas canvas = null;
-    [SerializeField] private Text text = null;
-
 
     private void Start()
     {
@@ -25,4 +16,5 @@ public class TextViewer : MonoBehaviour
     {
         transform.rotation = canvas.worldCamera.transform.rotation;
     }
+
 }

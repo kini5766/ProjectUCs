@@ -26,6 +26,8 @@ public class InteractorCollider : MonoBehaviour
     public CInteractionEvent OnInteraction => onInteraction;
     public CInteractionEvent OnConnect => onConnect;
     public CInteractionEvent OffConnect => offConnect;
+    public CInteractionEvent OnFocus => onFocus;
+    public CInteractionEvent OffFocus => offFocus;
 
     public void Interaction(Interactor interactor)
     {
@@ -57,6 +59,8 @@ public class InteractorCollider : MonoBehaviour
     private readonly CInteractionEvent onInteraction = new CInteractionEvent();
     private readonly CInteractionEvent onConnect = new CInteractionEvent();
     private readonly CInteractionEvent offConnect = new CInteractionEvent();
+    private readonly CInteractionEvent onFocus = new CInteractionEvent();
+    private readonly CInteractionEvent offFocus = new CInteractionEvent();
     [SerializeField] private string interactorId;
     private CInteractorDesc data;
 

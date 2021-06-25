@@ -1362,7 +1362,7 @@ MonoBehaviour:
   ItemID: Bomb
   ItemCount: 1
   interactor: {fileID: 184968510}
-  textView: {fileID: 1158140453}
+  nameViewer: {fileID: 1158140453}
 --- !u!54 &1056092056
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1404,6 +1404,7 @@ GameObject:
   - component: {fileID: 1158140452}
   - component: {fileID: 1158140451}
   - component: {fileID: 1158140450}
+  - component: {fileID: 1158140454}
   - component: {fileID: 1158140453}
   m_Layer: 0
   m_Name: Canvas
@@ -1505,5 +1506,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60286acbac536249978553146a525d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 1158140452}
   text: {fileID: 446452367}
+  NormalColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  FocusingColor: {r: 0.01960784, g: 0.9803922, b: 0.2745098, a: 1}
+--- !u!114 &1158140454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158140448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2218d4e8e1b3eeb48990c1bc8c13625c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 1158140452}

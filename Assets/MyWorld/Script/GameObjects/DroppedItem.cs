@@ -7,18 +7,22 @@ public class DroppedItem : MonoBehaviour
     [SerializeField] private string ItemID;
     [SerializeField] private int ItemCount = 1;
     [SerializeField] private InteractorCollider interactor = null;
-    [SerializeField] private TextViewer textView = null;
+    [SerializeField] private NameViewer nameViewer = null;
 
     private void Awake()
     {
         interactor.SetID(ItemID);
+
+        nameViewer.SetNormal();
     }
 
     private void Start()
     {
-        textView.SetNameText(interactor.DisplayName);
+        nameViewer.SetNameText(interactor.DisplayName);
         interactor.OnInteraction.AddListener(OnInteraction);
 
+        interactor.OnFocus.AddListener((_) => { nameViewer.SetFocus(); });
+        interactor.OffFocus.AddListener((_) => { nameViewer.SetNormal(); });
     }
 
     // interactor.OnInteraction
