@@ -25,7 +25,7 @@ MonoBehaviour:
     DisplayName: "\uB458\uC9F8 \uC8FC\uBBFC"
   - InteractorID: Sword
     DisplayName: "\uAE30\uBCF8 \uAC80"
-  - InteractorID: Ballon
+  - InteractorID: Balloon
     DisplayName: "\uD48D\uC120 \uAECC"
   - InteractorID: ChickenBlade
     DisplayName: "\uB2E4\uD06C \uD55C \uB9C8\uB9AC"
@@ -43,3 +43,5 @@ MonoBehaviour:
     DisplayName: "\uB2E8\uAC80"
   - InteractorID: Apple
     DisplayName: "\uC0AC\uACFC"
+  - InteractorID: Chest
+    DisplayName: "\uBCF4\uBB3C\uC0C1\uC790"

@@ -61,15 +61,9 @@ public class InteractorCollider : MonoBehaviour
     private readonly CInteractionEvent offConnect = new CInteractionEvent();
     private readonly CInteractionEvent onFocus = new CInteractionEvent();
     private readonly CInteractionEvent offFocus = new CInteractionEvent();
-    [SerializeField] private string interactorId;
+    private string interactorId;
     private CInteractorDesc data;
 
-
-    private void Start()
-    {
-        if (data == null)
-            SetID(interactorId);
-    }
 
     private void OnTriggerEnter(Collider other)
     {

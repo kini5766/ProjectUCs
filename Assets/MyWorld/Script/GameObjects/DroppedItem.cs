@@ -4,23 +4,35 @@ using UnityEngine;
 
 public class DroppedItem : MonoBehaviour
 {
-    [SerializeField] private string ItemID;
-    [SerializeField] private int ItemCount = 1;
+    public void SetData(string id, int count)
+    {
+        itemID = id;
+        itemCount = count;
+
+        interactor.SetID(itemID);
+        nameViewer.SetNameText(interactor.DisplayName);
+    }
+
+
+    [SerializeField] private string itemID;
+    [SerializeField] private int itemCount = 1;
     [SerializeField] private InteractorCollider interactor = null;
     [SerializeField] private NameViewer nameViewer = null;
 
     private void Awake()
     {
-        interactor.SetID(ItemID);
-
         nameViewer.SetNormal();
     }
 
     private void Start()
     {
-        nameViewer.SetNameText(interactor.DisplayName);
-        interactor.OnInteraction.AddListener(OnInteraction);
+        if (interactor.ID == null)
+        {
+            interactor.SetID(itemID);
+            nameViewer.SetNameText(interactor.DisplayName);
+        }
 
+        interactor.OnInteraction.AddListener(OnInteraction);
         interactor.OnFocus.AddListener((_) => { nameViewer.SetFocus(); });
         interactor.OffFocus.AddListener((_) => { nameViewer.SetNormal(); });
     }
@@ -31,7 +43,7 @@ public class DroppedItem : MonoBehaviour
         if (other.TryGetComponent(out Player player))
         {
             interactor.gameObject.SetActive(false);
-            player.PlayerOnly.Inventory.AddItem(ItemID, ItemCount);
+            player.PlayerOnly.Inventory.AddItem(itemID, itemCount);
 
             Destroy(gameObject);
         }

@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TalkableProp : MonoBehaviour
+public class Chest : MonoBehaviour
 {
-    [SerializeField] private string propID;
+    [SerializeField] private string propID = "Chest";
     [SerializeField] private InteractorCollider interactor = null;
     [SerializeField] private NameViewer nameViewer = null;
-    private Talkable talkable;
+    [SerializeField] private ItemDropper dropper = null;
+    [SerializeField] private Transform spawnPosition = null;
 
 
     private void Awake()
     {
-        talkable = gameObject.AddComponent<Talkable>();
         interactor.SetID(propID);
 
         nameViewer.SetNormal();
@@ -20,7 +20,6 @@ public class TalkableProp : MonoBehaviour
 
     private void Start()
     {
-        talkable.FirstMentID = interactor.ID;
         nameViewer.SetNameText(interactor.DisplayName);
 
         interactor.OnInteraction.AddListener(OnInteraction);
@@ -33,15 +32,24 @@ public class TalkableProp : MonoBehaviour
     {
         if (other.TryGetComponent(out Player player))
         {
-            Literacy literacy = player.PlayerOnly.Literacy;
-            literacy.BeginTalk(talkable);
+            interactor.gameObject.SetActive(false);
 
             // 플레이어가 자신 쪽으로 몸을 돌리기
             Vector3 dir = this.transform.position - player.transform.position;
             float deg = FRadian.GetRadian(dir) * Mathf.Rad2Deg;
             player.transform.rotation = Quaternion.Euler(new Vector3(0.0f, deg, 0.0f));
 
+            StartCoroutine(Open());
         }
     }
 
+    // 상자 열리는 애니메이션 출력
+    private IEnumerator Open()
+    {
+        dropper.DropItemOnce(spawnPosition);
+
+        yield return new WaitForSeconds(1.0f);
+
+        Destroy(gameObject);
+    }
 }

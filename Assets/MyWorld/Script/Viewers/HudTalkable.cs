@@ -13,11 +13,11 @@ public class HudTalkable : MonoBehaviour
     {
         if (name.Length == 0)
         {
-            leftNameArea.transform.SetParent(HUD.HiddenViewer, true);
+            leftNameArea.transform.SetParent(HUD.HiddenViewer, false);
         }
         else
         {
-            leftNameArea.transform.SetParent(gameObject.transform, true);
+            leftNameArea.transform.SetParent(gameObject.transform, false);
             text_leftName.text = name;
         }
 

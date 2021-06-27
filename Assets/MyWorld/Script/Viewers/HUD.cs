@@ -51,12 +51,12 @@ public class HUD : MonoBehaviour
 
     private void VisibleHUD(GameObject value)
     {
-        value.transform.SetParent(canvas.transform, true);
+        value.transform.SetParent(canvas.transform, false);
     }
 
     private void HiddenHUD(GameObject value)
     {
-        value.transform.SetParent(HiddenViewer, true);
+        value.transform.SetParent(HiddenViewer, false);
     }
 
     private void OpenMenu(GameObject value)

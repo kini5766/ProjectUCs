@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b41f7340d79bb434fb2f3d6e65d1aad6, type: 3}
+  m_Name: DropRateList_Accessroy
+  m_EditorClassIdentifier: 
+  rateLists: []
+  rateItems:
+  - ItemID: Sunglass
+    ItemCountMin: 1
+    ItemCountMax: 1
+    DropItemPrefab: {fileID: 4218667239758256290, guid: 0d62b52d4257f3644b703984e467ecd2, type: 3}
+    DropRate: 1
+  - ItemID: PassingNecklace
+    ItemCountMin: 1
+    ItemCountMax: 1
+    DropItemPrefab: {fileID: 4218667239758256290, guid: 0d62b52d4257f3644b703984e467ecd2, type: 3}
+    DropRate: 1
+  emptyRate: 0
