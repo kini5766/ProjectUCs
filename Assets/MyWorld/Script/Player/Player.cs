@@ -31,6 +31,10 @@ public class Player : MonoBehaviour
 
         SpawnLooking();
         SpawnPlayerOnly();
+
+        transform.SetParent(null);
+        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(looking);
     }
 
     private void Start()

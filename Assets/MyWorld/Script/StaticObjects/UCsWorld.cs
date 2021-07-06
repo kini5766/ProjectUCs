@@ -31,11 +31,20 @@ public class UCsWorld : MonoBehaviour
 
     void Awake()
     {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         instance = this;
 
         player = transform.Find(nameof(Player)).GetComponent<Player>();
         dataTable = transform.Find(nameof(DataTableManager)).GetComponent<DataTableManager>();
         hud = transform.Find(nameof(HUD)).GetComponent<HUD>();
+        
+        transform.SetParent(null);
+        DontDestroyOnLoad(gameObject);
     }
 
 }

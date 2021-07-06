@@ -21,6 +21,7 @@ public class CStatusInstance
         statusTree.AddListener(OnUpdateStatus);
     }
 
+
     public FStatusData GetTotal() => totalStatus;
     public float MoveSpeed => totalStatus.MoveSpeed;
     public float Hp => totalStatus.Hp;
@@ -32,6 +33,22 @@ public class CStatusInstance
         FStatusData invData = value - localStatus;
         localStatus = value;
         statusTree.UpdateStatus(invData);
+    }
+
+
+    public void SetParent(CStatusInstance instance)
+    {
+        statusTree.SetParent(instance.Tree);
+    }
+
+    public void AddChild(CStatusInstance instance)
+    {
+        statusTree.AddChild(instance.Tree);
+    }
+
+    public void UnLink()
+    {
+        statusTree.UnLink();
     }
 
 
@@ -68,13 +85,7 @@ public class CStatusRef
 
     public void SetParent(CStatusInstance instance)
     {
-        if (instance == null)
-        {
-            UnLink();
-            return;
-        }
-
-        instance.Tree.AddChild(statusTree);
+        statusTree.SetParent(instance.Tree);
     }
 
     public void UnLink()
