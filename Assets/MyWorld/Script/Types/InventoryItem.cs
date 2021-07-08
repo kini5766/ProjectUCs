@@ -2,10 +2,10 @@
 
 public class CInventoryItem
 {
-    public CInventoryItem(CInventroyItemDesc desc, string displayName)
+    public CInventoryItem(CInventroyItemDesc item, string displayName)
     {
-        itemID = desc.ItemID;
-        itemType = desc.ItemType;
+        itemID = item.ItemID;
+        itemType = item.ItemType;
         this.displayName = displayName;
     }
 

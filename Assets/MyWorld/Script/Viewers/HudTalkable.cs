@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HudTalkable : MonoBehaviour
+public class HudTalkable : UI
 {
-    [SerializeField] private GameObject leftNameArea = null;
+    [SerializeField] private UI leftNameArea = null;
     [SerializeField] private Text text_leftName = null;
     [SerializeField] private Text text_ment = null;
 
@@ -13,11 +13,11 @@ public class HudTalkable : MonoBehaviour
     {
         if (name.Length == 0)
         {
-            leftNameArea.transform.SetParent(HUD.HiddenViewer, false);
+            leftNameArea.Hidden();
         }
         else
         {
-            leftNameArea.transform.SetParent(gameObject.transform, false);
+            leftNameArea.Visible(this.transform);
             text_leftName.text = name;
         }
 

@@ -2,32 +2,30 @@
 using System.IO;
 using UnityEngine;
 
-public enum EItemType : ushort
+public enum EEquipmentType : ushort
 {
-    None, Equipment, Consumable
+    None, Weapon, Armor, Accessory
 }
 
 [System.Serializable]
-public class CInventroyItemDesc
+public class CEquipmentDesc
 {
     public string ItemID;
-    public EItemType ItemType;
-    public string DetailDescription;
+    public EEquipmentType ItemType;
+    public FStatusData Status;
 }
 
-
-[CreateAssetMenu(fileName = "InventoryItemList", menuName = "ScriptableObjects/InventoryItemTable")]
-public class SInventoryItemTable : ScriptableObject
+[CreateAssetMenu(fileName = "EquipmentList", menuName = "ScriptableObjects/EquipmentTable")]
+public class SEquipmentTable : ScriptableObject
 {
-
-    public CInventroyItemDesc this[string id]
+    public CEquipmentDesc this[string id]
     {
         get { return GetData(id); }
     }
 
-    public CInventroyItemDesc GetData(string id)
+    public CEquipmentDesc GetData(string id)
     {
-        foreach (CInventroyItemDesc data in dataTable)
+        foreach (CEquipmentDesc data in dataTable)
         {
             if (data.ItemID == id)
             {
@@ -41,7 +39,7 @@ public class SInventoryItemTable : ScriptableObject
 
 
     [SerializeField]
-    private List<CInventroyItemDesc> dataTable = new List<CInventroyItemDesc>();
+    private List<CEquipmentDesc> dataTable = new List<CEquipmentDesc>();
 
 
     [ContextMenu("SaveJson")]

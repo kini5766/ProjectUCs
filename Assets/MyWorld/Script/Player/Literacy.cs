@@ -64,7 +64,7 @@ public class Literacy : MonoBehaviour
             name = desc.DisplayName;
 
         contacted.TalkNext(ment.NextMentID);
-        GetHUD().SetTalkMent(name, ment.Ment);
+        GetHUD().HudTalkable.SetMent(name, ment.Ment);
 
         return true;
     }

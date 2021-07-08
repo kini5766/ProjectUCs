@@ -91,15 +91,15 @@ public class Player : MonoBehaviour
     // playerOnly.Input.MenuPressed.AddListener
     private void OnMenu()
     {
-        if (GetHUD().IsOpenedInventory())
+        if (GetHUD().IsOpenedMenu())
         {
             playerOnly.Input.HiddenMouse();
-            GetHUD().CloseInventory();
+            GetHUD().CloseMenu();
         }
         else
         {
             playerOnly.Input.VisibleMouse();
-            GetHUD().OpenInventory();
+            GetHUD().OpenMenu();
         }
     }
 

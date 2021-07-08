@@ -4,79 +4,61 @@ using UnityEngine;
 
 public class HUD : MonoBehaviour
 {
-    static public Transform HiddenViewer;
+    [SerializeField] private RectTransform canvas;
+    [SerializeField] private GameObject notRender;
+    [SerializeField] private HudTalkable hudTalkable;
+    [SerializeField] private HudMenu hudMenu;
+    private UI openedUI;
 
-    public bool IsOpenedInventory() => openedMenu == hudInventory.gameObject;
+
+    public bool IsOpenedMenu() => openedUI == hudMenu;
+    public HudTalkable HudTalkable => hudTalkable;
+
 
     public void OpenTalk()
     {
-        OpenMenu(hudTalkable.gameObject);
+        OpenMenu(hudTalkable);
     }
 
-    public void OpenInventory()
+    public void OpenMenu()
     {
-        hudInventory.ResetContents();
-        OpenMenu(hudInventory.gameObject);
+        OpenMenu(hudMenu);
     }
 
     public void CloseTalk()
     {
-        CloseMenu(hudTalkable.gameObject);
+        CloseMenu(hudTalkable);
     }
 
-    public void CloseInventory()
+    public void CloseMenu()
     {
-        CloseMenu(hudInventory.gameObject);
+        CloseMenu(hudMenu);
     }
-
-    public void SetTalkMent(string name, string ment)
-    {
-        hudTalkable.SetMent(name, ment);
-    }
-
-
-    [SerializeField] private Canvas canvas;
-    [SerializeField] private GameObject notRender;
-
-    [SerializeField] private HudTalkable hudTalkable;
-    [SerializeField] private InventoryViewer hudInventory;
-
-    private GameObject openedMenu;
 
 
     private void Awake()
     {
-        HiddenViewer = notRender.transform;
+        UI.HiddenViewer = notRender.transform;
     }
 
-    private void VisibleHUD(GameObject value)
+    private void OpenMenu(UI value)
     {
-        value.transform.SetParent(canvas.transform, false);
-    }
+        if (openedUI != null)
+            openedUI.Hidden();
 
-    private void HiddenHUD(GameObject value)
-    {
-        value.transform.SetParent(HiddenViewer, false);
-    }
+        value.Visible(canvas);
 
-    private void OpenMenu(GameObject value)
-    {
-        if (openedMenu != null)
-            HiddenHUD(openedMenu);
-
-        VisibleHUD(value);
-
-        openedMenu = value;
+        openedUI = value;
 
         CloseHuds();
     }
 
-    private void CloseMenu(GameObject value)
+    private void CloseMenu(UI value)
     {
-        if (value == openedMenu)
+        if (value == openedUI)
         {
-            HiddenHUD(openedMenu);
-            openedMenu = null;
+            openedUI.Hidden();
+            openedUI = null;
 
             OpenHuds();
         }
