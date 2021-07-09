@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class OrbitLooker : MonoBehaviour
 {
+    public float ZoomLength { get => zoomLength; set => zoomLength = value; }
+    public Vector3 Offset { get => offset; set => offset = value; }
+
     public void SetFocus(Transform value)
     {
         focus = value;
@@ -24,10 +27,13 @@ public class OrbitLooker : MonoBehaviour
     }
 
 
+    Vector3 offset = Vector3.zero;
     Transform focus;
     FSphereCoord sphereCoord;
+    float zoomLength = 10.0f;
     float lookupMax = 75.0f;
     float lookupMin = -15.0f;
+
 
     private void Start()
     {
@@ -39,7 +45,9 @@ public class OrbitLooker : MonoBehaviour
         if (focus == null)
             return;
 
-        this.transform.position = focus.transform.position;
+        Vector3 pos = offset + focus.transform.position;
+        pos += sphereCoord.GetDirection() * zoomLength;
+        this.transform.position = pos;
         this.transform.rotation = sphereCoord.GetQuaternion();
     }
 }

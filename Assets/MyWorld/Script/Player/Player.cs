@@ -6,7 +6,7 @@ using static UCsWorld;
 
 public class Player : MonoBehaviour
 {
-    public GameObject Looking => looking.gameObject;
+    public OrbitLooker Looking => looking;
     public PlayerOnlyComponent PlayerOnly => playerOnly;
 
     public CharacterMovement Movement => movement;
@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
     {
         playerOnly.Input.MoveAxis.AddListener(OnMoveAxis);
         playerOnly.Input.LookMove.AddListener(OnLookMove);
+        playerOnly.Input.Zoom.AddListener(OnZoom);
         playerOnly.Input.JumpPressed.AddListener(OnJump);
         playerOnly.Input.InteractionPressed.AddListener(OnInteraction);
         playerOnly.Input.MenuPressed.AddListener(OnMenu);
@@ -65,6 +66,12 @@ public class Player : MonoBehaviour
         axis2D.y *= playerOnly.Option.MouseTurnRate;
 
         looking.MoveLooking(axis2D);
+    }
+
+    // playerOnly.Input.Zoom.AddListener
+    private void OnZoom(float axis)
+    {
+        looking.ZoomLength += axis;
     }
 
     // playerOnly.Input.JumpPressed.AddListener
@@ -114,9 +121,9 @@ public class Player : MonoBehaviour
     private void SpawnLooking()
     {
         GameObject go = new GameObject("Player Looking");
-        go.transform.position = new Vector3(0.0f, 2.0f, 0.0f);
         looking = go.AddComponent<OrbitLooker>();
         looking.SetFocus(this.transform);
+        looking.Offset = new Vector3(0.0f, 1.8f, 0.0f);
     }
 
     // playerOnly 변수 셋팅

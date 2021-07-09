@@ -440,3 +440,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+
+# 애니메이션 테스트
+/Assets/Animation

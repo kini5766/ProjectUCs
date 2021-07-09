@@ -55,6 +55,7 @@ public class InputListener : MonoBehaviour
 
     public CKeyAxis2DEvent MoveAxis => moveAxis;
     public CKeyAxis2DEvent LookMove => lookMove;
+    public CKeyAxisEvent Zoom => zoom;
     public UnityEvent JumpPressed => jumpPressed;
     public UnityEvent InteractionPressed => interactionPressed;
     public UnityEvent MenuPressed => menuPressed;
@@ -63,6 +64,7 @@ public class InputListener : MonoBehaviour
     private bool bMouseVisible = false;
     private readonly CKeyAxis2DEvent moveAxis = new CKeyAxis2DEvent();
     private readonly CKeyAxis2DEvent lookMove = new CKeyAxis2DEvent();
+    private readonly CKeyAxisEvent zoom = new CKeyAxisEvent();
     private readonly UnityEvent jumpPressed = new UnityEvent();
     private readonly UnityEvent interactionPressed = new UnityEvent();
     private readonly UnityEvent menuPressed = new UnityEvent();
@@ -73,12 +75,14 @@ public class InputListener : MonoBehaviour
         UpdateCursorState();
         UpdateMove();
         UpdateLookMove();
+        UpdateZoom();
 
         UpdateJump();
         UpdateInteraction();
         UpdateMenu();
     }
 
+    // --
 
     void UpdateCursorState()
     {
@@ -95,6 +99,7 @@ public class InputListener : MonoBehaviour
         }
     }
 
+    // -- CKeyAxis2DEvent
 
     void UpdateMove()
     {
@@ -114,6 +119,16 @@ public class InputListener : MonoBehaviour
             lookMove.InvokeNotZero();
         }
     }
+
+    // -- CKeyAxisEvent
+
+    private void UpdateZoom()
+    {
+        zoom.Value = Input.GetAxis("Mouse ScrollWheel");
+        zoom.InvokeNotZero();
+    }
+
+    // -- UnityEvent
 
     void UpdateJump()
     {

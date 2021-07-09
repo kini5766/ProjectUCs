@@ -7,6 +7,7 @@ public class PlayerCamera : MonoBehaviour
 {
     private void Start()
     {
-        transform.SetParent(GetPlayer().Looking.transform, false);
+        transform.SetParent(GetPlayer().Looking.transform);
+        transform.localPosition = Vector3.zero;
     }
 }
