@@ -59,6 +59,7 @@ public class InputListener : MonoBehaviour
     public UnityEvent JumpPressed => jumpPressed;
     public UnityEvent InteractionPressed => interactionPressed;
     public UnityEvent MenuPressed => menuPressed;
+    public UnityEvent RollPressed => rollPressed;
 
 
     private bool bMouseVisible = false;
@@ -68,6 +69,7 @@ public class InputListener : MonoBehaviour
     private readonly UnityEvent jumpPressed = new UnityEvent();
     private readonly UnityEvent interactionPressed = new UnityEvent();
     private readonly UnityEvent menuPressed = new UnityEvent();
+    private readonly UnityEvent rollPressed = new UnityEvent();
 
 
     void Update()
@@ -80,6 +82,7 @@ public class InputListener : MonoBehaviour
         UpdateJump();
         UpdateInteraction();
         UpdateMenu();
+        UpdateRoll();
     }
 
     // --
@@ -107,7 +110,7 @@ public class InputListener : MonoBehaviour
         moveAxis.Value.y = Input.GetAxis("Vertical");
 
         // Event
-        moveAxis.InvokeNotZero();
+        moveAxis.Invoke(moveAxis.Value);
     }
 
     void UpdateLookMove()
@@ -151,6 +154,14 @@ public class InputListener : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             menuPressed.Invoke();
+        }
+    }
+
+    private void UpdateRoll()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            rollPressed.Invoke();
         }
     }
 

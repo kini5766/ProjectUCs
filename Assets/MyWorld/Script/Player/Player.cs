@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
         playerOnly.Input.JumpPressed.AddListener(OnJump);
         playerOnly.Input.InteractionPressed.AddListener(OnInteraction);
         playerOnly.Input.MenuPressed.AddListener(OnMenu);
+        playerOnly.Input.RollPressed.AddListener(OnRoll);
 
         state.OnStateTypeChanged.AddListener(OnStateTypeChanged);
     }
@@ -54,7 +55,9 @@ public class Player : MonoBehaviour
     private void OnMoveAxis(Vector2 axis2D)
     {
         if (state.IsCanMove() == false)
-            return;
+        {
+            axis2D = Vector2.zero;
+        }
 
         movement.Move(looking.transform.forward, axis2D);
     }
@@ -77,7 +80,18 @@ public class Player : MonoBehaviour
     // playerOnly.Input.JumpPressed.AddListener
     private void OnJump()
     {
-        movement.Jump();
+        if (state.IsIdleMode())
+        {
+            movement.Jump();
+        }
+
+    }
+
+    // playerOnly.Input.RollPressed.AddListener
+    private void OnRoll()
+    {
+        Begin_Roll();
+        // state.SetRollMode();
     }
 
     // playerOnly.Input.InteractionPressed.AddListener
@@ -113,7 +127,10 @@ public class Player : MonoBehaviour
     // state.OnStateTypeChanged
     private void OnStateTypeChanged(EStateType oldType, EStateType newType)
     {
-
+        switch (newType)
+        {
+            case EStateType.Roll: Begin_Roll(); break;
+        }
     }
 
 
@@ -134,5 +151,26 @@ public class Player : MonoBehaviour
         playerOnly = go.AddComponent<PlayerOnlyComponent>();
     }
 
+    private void Begin_Roll()
+    {
+        Vector2 keyAxis2D = PlayerOnly.Input.MoveAxis.Value;
+        Vector3 moveForward;
+        if (keyAxis2D == Vector2.zero)
+        {
+            moveForward = transform.forward;
+        }
+        else
+        {
+            // 보고 있는 방향의 앞쪽 (y 축 제거)
+            Vector3 forword = looking.transform.forward;
+            forword.y = 0.0f;
+            forword.Normalize();
+            Vector3 right = new Vector3(forword.z, 0.0f, -forword.x);
 
+            moveForward = forword * keyAxis2D.y + right * keyAxis2D.x;
+        }
+
+        Quaternion quat = Quaternion.LookRotation(moveForward, Vector3.up);
+        transform.rotation = quat;
+    }
 }

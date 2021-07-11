@@ -1,14 +1,21 @@
+using System;
 using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    public bool IsGround => controller.isGrounded;
+    public bool IsGround => bGround;
 
     public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
+    public Vector3 Velocity => velocity;
 
     // looking : 보고 있는 방향, keyAxis2D : 키보드 입력 값
     public void Move(Vector3 looking, Vector2 keyAxis2D)
     {
+        if (keyAxis2D == Vector2.zero)
+        {
+            moveAxis = Vector3.zero;
+        }
+
         float sqrMagnitude = keyAxis2D.sqrMagnitude;
         if (sqrMagnitude > 1.0f)
         {
@@ -28,7 +35,10 @@ public class CharacterMovement : MonoBehaviour
 
     public void Jump()
     {
-        bOnJump = true;
+        if (bGround)
+        {
+            velocity.y = jumpForce;
+        }
     }
 
 
@@ -41,31 +51,32 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float turnSpeed = 360.0f;
     private Vector3 moveAxis;
     [SerializeField] private float jumpForce = 7.0f;
-    private bool bOnJump = false;
+    
+    // -- 땅 체크 -- //
+    private bool bGround = true;
+    private float footHeight;
+    private float springLeg;
 
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        footHeight = controller.center.y - controller.height * 0.5f + controller.radius;
+        springLeg = controller.skinWidth;
     }
 
     private void FixedUpdate()
     {
-        if ((controller.collisionFlags & CollisionFlags.Below) != 0)
-        {
-            if (velocity.y < 0.0f)
-            {
-                velocity.y = 0.0f;
-            }
-        }
-        else if ((controller.collisionFlags & CollisionFlags.Above) != 0)
-        {
-            if (velocity.y > 0.0f)
-            {
-                velocity.y = 0;
-            }
-        }
+        MoveInput();
+        UpdateGravity();
+        CheckGround();
 
+        controller.Move(Time.fixedDeltaTime * velocity);
+
+    }
+
+    private void MoveInput()
+    {
         velocity.x = 0.0f;
         velocity.z = 0.0f;
 
@@ -85,25 +96,50 @@ public class CharacterMovement : MonoBehaviour
                 float deltaSpeed = turnSpeed * Time.fixedDeltaTime * moveAxis.sqrMagnitude;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, target, deltaSpeed);
             }
-
-            // 다음 입력 대기
-            moveAxis = Vector3.zero;
         }
+    }
 
-        velocity += Time.fixedDeltaTime * Physics.gravity;
-
-
-        if (bOnJump)
+    private void CheckGround()
+    {
+        if (controller.isGrounded)
         {
-            bOnJump = false;
-
-            if (controller.isGrounded)
-                velocity.y = jumpForce;
+            bGround = true;
         }
+        else if (velocity.y < -0.1f)
+        {
+            Vector3 start = transform.position;
+            start.y += footHeight;
 
+            bGround = Physics.SphereCast(new Ray(start, Vector3.down), controller.radius, springLeg + controller.radius);
+        }
+        else
+        {
+            bGround = false;
+        }
+    }
 
-        controller.Move(Time.fixedDeltaTime * velocity);
-
+    private void UpdateGravity()
+    {
+        if ((controller.collisionFlags & CollisionFlags.Below) != 0)
+        {
+            // 아래 충돌 시 중력힘 무효화
+            if (velocity.y < 0.0f)
+            {
+                velocity.y = 0.0f;
+            }
+        }
+        else if ((controller.collisionFlags & CollisionFlags.Above) != 0)
+        {
+            // 위쪽 충돌 시 점프힘 무효화
+            if (velocity.y > 0.0f)
+            {
+                velocity.y = 0.0f;
+            }
+        }
+        else
+        {
+            velocity += Time.fixedDeltaTime * Physics.gravity;
+        }
     }
 
 
