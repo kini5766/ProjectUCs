@@ -78,3 +78,4 @@ crashlytics-build.properties
 
 # 애니메이션 테스트
 /Assets/Animation
+/Assets/Animation.meta
