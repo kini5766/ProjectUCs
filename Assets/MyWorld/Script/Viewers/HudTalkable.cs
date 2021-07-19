@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HudTalkable : UI
+public class HudTalkable : UserWidget
 {
-    [SerializeField] private UI leftNameArea = null;
+    [SerializeField] private UserWidget leftNameArea = null;
     [SerializeField] private Text text_leftName = null;
     [SerializeField] private Text text_ment = null;
 

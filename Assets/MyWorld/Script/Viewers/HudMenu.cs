@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HudMenu : UI
+public class HudMenu : UserWidget
 {
     [SerializeField] private StatusViewer statusViewer;
 

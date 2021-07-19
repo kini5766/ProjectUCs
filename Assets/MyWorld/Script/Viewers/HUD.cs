@@ -8,7 +8,7 @@ public class HUD : MonoBehaviour
     [SerializeField] private GameObject notRender;
     [SerializeField] private HudTalkable hudTalkable;
     [SerializeField] private HudMenu hudMenu;
-    private UI openedUI;
+    private UserWidget openedUI;
 
 
     public bool IsOpenedMenu() => openedUI == hudMenu;
@@ -38,10 +38,10 @@ public class HUD : MonoBehaviour
 
     private void Awake()
     {
-        UI.HiddenViewer = notRender.transform;
+        UserWidget.HiddenViewer = notRender.transform;
     }
 
-    private void OpenMenu(UI value)
+    private void OpenMenu(UserWidget value)
     {
         if (openedUI != null)
             openedUI.Hidden();
@@ -53,7 +53,7 @@ public class HUD : MonoBehaviour
         CloseHuds();
     }
 
-    private void CloseMenu(UI value)
+    private void CloseMenu(UserWidget value)
     {
         if (value == openedUI)
         {
