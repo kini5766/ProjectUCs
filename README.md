@@ -1,7 +1,7 @@
 # ProjectUCs
 프로젝트 유니티 C#
 
-unity버전2020.3.13f1
+unity버전2020.3.14f1
 
 
 씬 : SceneInteractor.unity
