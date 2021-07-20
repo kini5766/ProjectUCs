@@ -42,10 +42,12 @@ public class DroppedItem : MonoBehaviour
     {
         if (other.TryGetComponent(out Player player))
         {
-            interactor.gameObject.SetActive(false);
+            // 인벤토리 테스트로 잠시 주석처리
+            // interactor.gameObject.SetActive(false);
+            // Destroy(gameObject);
+
             player.PlayerOnly.Inventory.AddItem(itemID, itemCount);
 
-            Destroy(gameObject);
         }
 
     }

@@ -16,12 +16,14 @@ public class SlotViewer : MonoBehaviour
 
     public void DisableButton()
     {
+        textName.text = emptyData;
         button.interactable = false;
     }
 
 
     [SerializeField] private Text textName;
     [SerializeField] private Button button;
+    [SerializeField] private string emptyData = "¾øÀ½";
 
 
 }

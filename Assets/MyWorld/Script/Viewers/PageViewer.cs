@@ -6,24 +6,24 @@ using UnityEngine.UI;
 
 public class PageViewer : MonoBehaviour
 {
-    public UnityEvent OnChangedPage => onChangedPage;
-    public int CurrNum => currPage;
-    public int MaxNum => maxPage;
+    public UnityEvent OnNextPage => buttonNext.onClick;
+    public UnityEvent OnPrevPage => buttonPrev.onClick;
 
-    public void ResetPage(int maxPageNum)
+    public int MaxPage => maxPage;
+    public int CurrPage => currPage;
+
+    public bool IsLastPage() => (currPage == maxPage);
+    public bool IsFirstPage() => (currPage == 0);
+
+    public void SetNextPage() => SetCurrPage(currPage + 1);
+    public void SetPrevPage() => SetCurrPage(currPage - 1);
+
+    public void SetMaxPage(int value)
     {
-        currPage = 0;
-        maxPage = maxPageNum;
+        if (value < 0)
+            value = 0;
 
-        buttonPrev.interactable = false;
-        buttonNext.interactable = (currPage != maxPage);
-
-        textPage.text = string.Format("{0} / {1}", currPage + 1, maxPage + 1);
-    }
-
-    public void SetMaxPage(int maxPageNum)
-    {
-        maxPage = maxPageNum;
+        maxPage = value;
 
         if (currPage > maxPage)
         {
@@ -32,7 +32,24 @@ public class PageViewer : MonoBehaviour
             buttonPrev.interactable = (currPage != 0);
         }
 
-        buttonNext.interactable = false;
+        buttonNext.interactable = !IsLastPage();
+        textPage.text = string.Format("{0} / {1}", currPage + 1, maxPage + 1);
+    }
+
+    public void SetCurrPage(int value)
+    {
+        if (value < 0)
+            value = 0;
+
+        currPage = value;
+
+        if (currPage > maxPage)
+        {
+            currPage = maxPage;
+        }
+
+        buttonPrev.interactable = !IsFirstPage();
+        buttonNext.interactable = !IsLastPage();
         textPage.text = string.Format("{0} / {1}", currPage + 1, maxPage + 1);
     }
 
@@ -40,48 +57,7 @@ public class PageViewer : MonoBehaviour
     [SerializeField] private Button buttonNext = null;
     [SerializeField] private Button buttonPrev = null;
     [SerializeField] private Text textPage = null;
-    private readonly UnityEvent onChangedPage = new UnityEvent();
     private int currPage = 0;
     private int maxPage = 0;
-
-    private void Start()
-    {
-        buttonNext.onClick.AddListener(NextPage);
-        buttonPrev.onClick.AddListener(PrevPage);
-    }
-
-    private void NextPage()
-    {
-        if (currPage == maxPage)
-        {
-            return;
-        }
-
-        ++currPage;
-
-        buttonPrev.interactable = true;
-        buttonNext.interactable = (currPage != maxPage);
-
-        textPage.text = string.Format("{0} / {1}", currPage + 1, maxPage + 1);
-
-        onChangedPage.Invoke();
-    }
-
-    private void PrevPage()
-    {
-        if (currPage == 0)
-        {
-            return;
-        }
-
-        --currPage;
-
-        buttonPrev.interactable = (currPage != 0);
-        buttonNext.interactable = true;
-
-        textPage.text = string.Format("{0} / {1}", currPage + 1, maxPage + 1);
-
-        onChangedPage.Invoke();
-    }
 
 }

@@ -32,6 +32,14 @@ public class HudMenu : UserWidget
         OnMain();
     }
 
+    public override void Visible(Transform canvas)
+    {
+        base.Visible(canvas);
+
+        OnMain();
+    }
+
+
     private void SetViewing(GameObject value)
     {
         if (value == currViewing)
