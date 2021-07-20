@@ -17,7 +17,7 @@ public class HudTalkable : UserWidget
         }
         else
         {
-            leftNameArea.Visible(this.transform);
+            leftNameArea.Visible();
             text_leftName.text = name;
         }
 

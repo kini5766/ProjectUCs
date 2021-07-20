@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class HUD : MonoBehaviour
 {
-    [SerializeField] private RectTransform canvas;
-    [SerializeField] private GameObject notRender;
     [SerializeField] private HudTalkable hudTalkable;
     [SerializeField] private HudMenu hudMenu;
     private UserWidget openedUI;
@@ -36,17 +34,12 @@ public class HUD : MonoBehaviour
     }
 
 
-    private void Awake()
-    {
-        UserWidget.HiddenViewer = notRender.transform;
-    }
-
     private void OpenMenu(UserWidget value)
     {
         if (openedUI != null)
             openedUI.Hidden();
 
-        value.Visible(canvas);
+        value.Visible();
 
         openedUI = value;
 

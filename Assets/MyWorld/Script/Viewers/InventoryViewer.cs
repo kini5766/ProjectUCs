@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryViewer : MonoBehaviour
+public class InventoryViewer : UserWidget
 {
     public void SetItems(List<CInventoryItem> value)
     {
@@ -29,8 +29,8 @@ public class InventoryViewer : MonoBehaviour
     }
 
 
-    [SerializeField] private Transform slotParent = null;
-    [SerializeField] private PageViewer page = null;
+    [SerializeField] Transform slotParent = null;
+    [SerializeField] PageViewer page = null;
     private readonly List<SlotViewer> slots = new List<SlotViewer>();
     List<CInventoryItem> items = new List<CInventoryItem>();
 
@@ -57,12 +57,13 @@ public class InventoryViewer : MonoBehaviour
         SetItems(UCsWorld.GetPlayer().PlayerOnly.Inventory.Items);
     }
 
-    private void OnEnable()
+    public override void Visible()
     {
+        base.Visible();
+
         // 인벤토리 테스트
         ResetContents();
     }
-
 
     private void OnNextPage()
     {

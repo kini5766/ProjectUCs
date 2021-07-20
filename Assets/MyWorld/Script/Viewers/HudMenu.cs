@@ -7,7 +7,7 @@ public class HudMenu : UserWidget
 {
     public void OnMain()
     {
-        SetViewing(statusViewer.gameObject);
+        SetViewing(statusViewer);
     }
 
     public void OnEquipment()
@@ -22,34 +22,34 @@ public class HudMenu : UserWidget
 
 
 
-    [SerializeField] private StatusViewer statusViewer;
-    [SerializeField] private GameObject equipmentViewer;
-    [SerializeField] private GameObject consumableViewer;
-    private GameObject currViewing;
+    [SerializeField] private UserWidget statusViewer;
+    [SerializeField] private UserWidget equipmentViewer;
+    [SerializeField] private UserWidget consumableViewer;
+    private UserWidget currViewing;
 
     private void Awake()
     {
         OnMain();
     }
 
-    public override void Visible(Transform canvas)
+    public override void Visible()
     {
-        base.Visible(canvas);
+        base.Visible();
 
         OnMain();
     }
 
 
-    private void SetViewing(GameObject value)
+    private void SetViewing(UserWidget value)
     {
         if (value == currViewing)
             return;
 
         if (currViewing != null)
-            currViewing.SetActive(false);
+            currViewing.Hidden();
 
         if (value != null)
-            value.SetActive(true);
+            value.Visible();
 
         currViewing = value;
     }

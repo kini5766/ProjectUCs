@@ -2,28 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Canvas))]
 public class UserWidget : MonoBehaviour
 {
-    // ugui 안 보이는 곳 // HUD에서 셋팅
-    static public Transform HiddenViewer;
+    Canvas visibilityCanvas;
 
-
-    private RectTransform rectTransform;
-
-    virtual public void Visible(Transform canvas)
+    virtual public void Visible()
     {
-        transform.SetParent(canvas, false);
+        if (visibilityCanvas == null)
+        {
+            visibilityCanvas = GetComponent<Canvas>();
+        }
 
-        if (rectTransform == null)
-            rectTransform = (RectTransform)transform;
-
-        // 현재 화면 해상도에 맞게
-        rectTransform.sizeDelta = Vector2.zero;
-        rectTransform.anchoredPosition = Vector2.zero;
+        visibilityCanvas.enabled = true;
     }
 
     virtual public void Hidden()
     {
-        this.transform.SetParent(HiddenViewer, false);
+        if (visibilityCanvas == null)
+        {
+            visibilityCanvas = GetComponent<Canvas>();
+        }
+
+        visibilityCanvas.enabled = false;
     }
 }
