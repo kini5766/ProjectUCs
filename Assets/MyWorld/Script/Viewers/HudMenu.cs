@@ -5,18 +5,44 @@ using UnityEngine;
 
 public class HudMenu : UserWidget
 {
+    public void OnMain()
+    {
+        SetViewing(statusViewer.gameObject);
+    }
+
+    public void OnEquipment()
+    {
+        SetViewing(equipmentViewer);
+    }
+
+    public void OnConsumable()
+    {
+        SetViewing(consumableViewer);
+    }
+
+
+
     [SerializeField] private StatusViewer statusViewer;
+    [SerializeField] private GameObject equipmentViewer;
+    [SerializeField] private GameObject consumableViewer;
+    private GameObject currViewing;
 
     private void Awake()
     {
-        statusViewer.gameObject.SetActive(true);
+        OnMain();
     }
 
-    public override void Visible(Transform canvas)
+    private void SetViewing(GameObject value)
     {
-        statusViewer.transform.SetParent(this.transform);
+        if (value == currViewing)
+            return;
 
-        base.Visible(canvas);
+        if (currViewing != null)
+            currViewing.SetActive(false);
+
+        if (value != null)
+            value.SetActive(true);
+
+        currViewing = value;
     }
-
 }

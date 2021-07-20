@@ -44,7 +44,6 @@ public class UCsWorld : MonoBehaviour
         hud = transform.Find(nameof(HUD)).GetComponent<HUD>();
         
         transform.SetParent(null);
-        DontDestroyOnLoad(gameObject);
     }
 
 }
