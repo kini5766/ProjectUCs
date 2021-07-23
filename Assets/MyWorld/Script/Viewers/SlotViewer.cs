@@ -3,14 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class SlotViewerData
+{
+    public string DisplayName;
+    public int ItemCount;
+}
 
 public class SlotViewer : MonoBehaviour
 {
     public Button.ButtonClickedEvent OnClick => button.onClick;
 
-    public void SetSlotData(string data)
+    public void SetSlotData(in SlotViewerData data)
     {
-        textName.text = data;
+        if (data == null)
+        {
+            textName.text = emptyData;
+            button.interactable = true;
+            return;
+        }
+
+        textName.text = data.DisplayName;
         button.interactable = true;
     }
 

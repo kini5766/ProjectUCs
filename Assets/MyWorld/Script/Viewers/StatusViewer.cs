@@ -10,7 +10,7 @@ public class StatusViewer : MonoBehaviour
     [SerializeField] Text armorValue;
     [SerializeField] Text moveSpeedValue;
 
-    public void SetData(FStatusData data)
+    public void SetData(in FStatusData data)
     {
         hpValue.text = data.Hp.ToString();
         attackValue.text = data.Attack.ToString();

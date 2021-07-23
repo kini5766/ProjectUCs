@@ -13,10 +13,52 @@ MonoBehaviour:
   m_Name: EquipmentList
   m_EditorClassIdentifier: 
   dataTable:
-  - ItemID: 
+  - ItemID: Sword
     ItemType: 1
     Status:
       MoveSpeed: 0
+      Hp: 0
+      Attack: 0
+      Armor: 0
+  - ItemID: Balloon
+    ItemType: 1
+    Status:
+      MoveSpeed: 0
+      Hp: 0
+      Attack: 5
+      Armor: 0
+  - ItemID: ChickenBlade
+    ItemType: 1
+    Status:
+      MoveSpeed: 0
+      Hp: 0
+      Attack: 10
+      Armor: 0
+  - ItemID: ClothArmor
+    ItemType: 2
+    Status:
+      MoveSpeed: 0
+      Hp: 0
+      Attack: 0
+      Armor: 2
+  - ItemID: ChainArmor
+    ItemType: 2
+    Status:
+      MoveSpeed: 0
+      Hp: 0
+      Attack: 0
+      Armor: 3
+  - ItemID: Sunglass
+    ItemType: 3
+    Status:
+      MoveSpeed: 1
+      Hp: 0
+      Attack: 0
+      Armor: 0
+  - ItemID: PassingNecklace
+    ItemType: 3
+    Status:
+      MoveSpeed: 2
       Hp: 0
       Attack: 0
       Armor: 0
