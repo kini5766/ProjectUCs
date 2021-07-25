@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HudTalkable : UserWidget
+public class ScreenTalkable : UserWidget
 {
     [SerializeField] private UserWidget leftNameArea = null;
     [SerializeField] private Text text_leftName = null;

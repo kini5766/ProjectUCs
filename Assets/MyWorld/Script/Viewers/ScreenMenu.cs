@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HudMenu : UserWidget
+public class ScreenMenu : UserWidget
 {
     public void OnMain()
     {

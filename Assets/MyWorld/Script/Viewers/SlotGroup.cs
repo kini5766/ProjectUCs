@@ -30,13 +30,14 @@ public class SlotGroup : MonoBehaviour
 
     void Awake()
     {
+        int curr = 0;
         int count = this.transform.childCount;
         for (int i = 0; i < count; i++)
         {
             if (this.transform.GetChild(i).TryGetComponent(out SlotViewer slot))
             {
-                // 람다에 i 넣으면 최종적으로 count가 되어 temp로 캡쳐 방지
-                int temp = i;
+                // temp로 람다 캡쳐 오류 방지
+                int temp = curr++;
                 slot.OnClick.AddListener(() => onSelectedItem.Invoke(temp));
                 slots.Add(slot);
             }
