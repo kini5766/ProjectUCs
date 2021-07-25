@@ -82,7 +82,22 @@ public class EquipmentPresenter : UserWidget
         if (index < 0 || index >= inventory.Equipments.Count)
             return;
 
-        EquipEquipment(inventory.Equipments[index]);
+        CInventoryItem_Equipment equipment = inventory.Equipments[index];
+
+        switch (equipment.EquipmentType)
+        {
+            case EEquipmentType.Weapon:
+                SetEquipedWeapon(equipment, index);
+                break;
+            case EEquipmentType.Armor:
+                SetEquipedArmor(equipment, index);
+                break;
+            case EEquipmentType.Accessory:
+                SetEquipedAccessory(equipment, index);
+                break;
+        }
+
+        UpdateEquipmentItems();
     }
 
     // 무기 버튼 클릭
@@ -165,66 +180,83 @@ public class EquipmentPresenter : UserWidget
         viewer.SetStatus(statusEquipment.GetTotal());
     }
 
-    private void SetEquipedWeapon(CInventoryItem_Equipment value)
+    private void SetEquipedWeapon(CInventoryItem_Equipment value, int index)
     {
-        UnequipWeapon();
-        weapon = value;
+        if (value == null)
+        {
+            UnequipWeapon();
+            return;
+        }
 
         if (weapon != null)
         {
-            viewer.SetWeapon(MakeSlotData(value));
-
-            statusWeapon.SetLocal(weapon.Status);
-            UpdateStatus();
+            inventory.Equipments[index] = weapon;
+            UpdateEquipmentItems();
         }
-    }
-
-    private void SetEquipedArmor(CInventoryItem_Equipment value)
-    {
-        UnequipArmor();
-        armor = value;
-
-        if (value != null)
+        else
         {
-            viewer.SetArmor(MakeSlotData(value));
-
-            statusArmor.SetLocal(value.Status);
-            UpdateStatus();
+            inventory.Equipments.Remove(value);
         }
+
+        // Changed
+        weapon = value;
+        viewer.SetWeapon(MakeSlotData(value));
+
+        statusWeapon.SetLocal(weapon.Status);
+        UpdateStatus();
     }
 
-    private void SetEquipedAccessory(CInventoryItem_Equipment value)
+    private void SetEquipedArmor(CInventoryItem_Equipment value, int index)
     {
-        UnequipAccessory();
-        accessory = value;
+        if (value == null)
+        {
+            UnequipArmor();
+            return;
+        }
+
+        if (armor != null)
+        {
+            inventory.Equipments[index] = armor;
+            UpdateEquipmentItems();
+        }
+        else
+        {
+            inventory.Equipments.Remove(value);
+        }
+
+        // Changed
+        armor = value;
+        viewer.SetArmor(MakeSlotData(value));
+
+        statusArmor.SetLocal(value.Status);
+        UpdateStatus();
+    }
+
+    private void SetEquipedAccessory(CInventoryItem_Equipment value, int index)
+    {
+        if (value == null)
+        {
+            UnequipAccessory();
+            return;
+        }
 
         if (accessory != null)
         {
-            viewer.SetAccessory(MakeSlotData(value));
-
-            statusWeapon.SetLocal(accessory.Status);
-            UpdateStatus();
+            inventory.Equipments[index] = accessory;
+            UpdateEquipmentItems();
         }
-    }
-
-    private void EquipEquipment(CInventoryItem_Equipment equipment)
-    {
-        inventory.Equipments.Remove(equipment);
-
-        switch (equipment.EquipmentType)
+        else
         {
-            case EEquipmentType.Weapon:
-                SetEquipedWeapon(equipment);
-                break;
-            case EEquipmentType.Armor:
-                SetEquipedArmor(equipment);
-                break;
-            case EEquipmentType.Accessory:
-                SetEquipedAccessory(equipment);
-                break;
+            inventory.Equipments.Remove(value);
         }
 
-        UpdateEquipmentItems();
+        // Changed
+        accessory = value;
+
+        viewer.SetAccessory(MakeSlotData(value));
+
+        statusWeapon.SetLocal(accessory.Status);
+        UpdateStatus();
     }
 
     #endregion
