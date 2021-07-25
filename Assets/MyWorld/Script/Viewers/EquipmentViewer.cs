@@ -9,7 +9,7 @@ public class EquipmentViewer : MonoBehaviour
 {
     public Func<int, SlotViewerData> FuncGetItem { get { return inventory.FuncGetItem; } set { inventory.FuncGetItem = value; } }
     public OnSelectedItem OnSelectedItem => inventory.OnSelectedItem;
-    public void ResetContents(int count) => inventory.ResetContents(count);
+    public void ResetInventoryView(int count) => inventory.ResetContents(count);
     public void UpdateItems(int count) => inventory.UpdateItems(count);
 
     public void SetStatus(in FStatusData data) => status.SetData(data);

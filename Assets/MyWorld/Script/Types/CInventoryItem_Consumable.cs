@@ -20,6 +20,7 @@ public class CInventoryItem_Consumable : CInventoryItem
     public OnStockChanged OnStockChanged => onStockChanged;
     public GameObject ConsumableObject => consumableObject;
     public string AnimName => animName;
+    public int Stock => stock;
 
 
     public CInventoryItem_Consumable TakeOut(int itemCount)

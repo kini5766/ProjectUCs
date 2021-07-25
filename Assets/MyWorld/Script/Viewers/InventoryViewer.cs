@@ -70,7 +70,7 @@ public class InventoryViewer : MonoBehaviour
 
             if (item == null)
             {
-                slotGroup[i].DisableButton();
+                slotGroup[i].SetEmpty();
             }
             else
             {

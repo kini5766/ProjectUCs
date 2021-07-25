@@ -19,11 +19,14 @@ public class EquipmentPresenter : UserWidget
 
     [SerializeField] EquipmentViewer viewer;
     private Inventory inventory;
+    private CInventoryItem_Equipment weapon;
+    private CInventoryItem_Equipment armor;
+    private CInventoryItem_Equipment accessory;
     private readonly CStatusInstance statusEquipment = new CStatusInstance();
     private readonly CStatusInstance statusWeapon = new CStatusInstance();
     private readonly CStatusInstance statusArmor = new CStatusInstance();
     private readonly CStatusInstance statusAccessory = new CStatusInstance();
-    private CStatusRef statusCharacter;
+    private CStatusRef statusCharacter; 
 
 
     #region MonoBehaviour
@@ -42,7 +45,7 @@ public class EquipmentPresenter : UserWidget
         viewer.UnequipmentArmor.AddListener(UnequipArmor);
         viewer.UnequipmentAccessory.AddListener(UnequipAccessory);
 
-        viewer.ResetContents(inventory.Equipments.Count);
+        ResetContants();
     }
 
     #endregion
@@ -52,7 +55,7 @@ public class EquipmentPresenter : UserWidget
 
     public override void Visible()
     {
-        viewer.ResetContents(inventory.Equipments.Count);
+        ResetContants();
 
         base.Visible();
     }
@@ -62,6 +65,7 @@ public class EquipmentPresenter : UserWidget
 
     #region UI Events
 
+    // 인벤토리(소모품)에서 아이템리스트 보이기
     private SlotViewerData GetItemEquipment(int index)
     {
         if (index < 0 || index >= inventory.Equipments.Count)
@@ -69,13 +73,10 @@ public class EquipmentPresenter : UserWidget
 
         CInventoryItem_Equipment equipment = inventory.Equipments[index];
 
-        return new SlotViewerData
-        {
-            DisplayName = equipment.DisplayName,
-            ItemCount = 1
-        };
+        return MakeSlotData(equipment);
     }
 
+    // 인벤토리에서 장비 클릭
     private void SetEquipment(int index)
     {
         if (index < 0 || index >= inventory.Equipments.Count)
@@ -84,45 +85,48 @@ public class EquipmentPresenter : UserWidget
         EquipEquipment(inventory.Equipments[index]);
     }
 
+    // 무기 버튼 클릭
     private void UnequipWeapon()
     {
-        if (inventory.Weapon == null)
+        if (weapon == null)
             return;
 
-        inventory.Equipments.Add(inventory.Weapon);
+        inventory.Equipments.Add(weapon);
         UpdateEquipmentItems();
 
-        inventory.Weapon = null;
+        weapon = null;
         viewer.SetWeapon(null);
 
         statusWeapon.SetLocal(new FStatusData());
         UpdateStatus();
     }
 
+    // 방어구 버튼 클릭
     private void UnequipArmor()
     {
-        if (inventory.Armor == null)
+        if (armor == null)
             return;
 
-        inventory.Equipments.Add(inventory.Armor);
+        inventory.Equipments.Add(armor);
         UpdateEquipmentItems();
 
-        inventory.Armor = null;
+        armor = null;
         viewer.SetArmor(null);
 
         statusArmor.SetLocal(new FStatusData());
         UpdateStatus();
     }
 
+    // 장신구 버튼 클릭
     private void UnequipAccessory()
     {
-        if (inventory.Accessory == null)
+        if (accessory == null)
             return;
 
-        inventory.Equipments.Add(inventory.Accessory);
+        inventory.Equipments.Add(accessory);
         UpdateEquipmentItems();
 
-        inventory.Accessory = null;
+        accessory = null;
         viewer.SetAccessory(null);
 
         statusAccessory.SetLocal(new FStatusData());
@@ -133,6 +137,23 @@ public class EquipmentPresenter : UserWidget
 
 
     #region Privates
+
+    private SlotViewerData MakeSlotData(CInventoryItem_Equipment value)
+    {
+        return new SlotViewerData
+        {
+            DisplayName = value.DisplayName,
+            ItemCount = 1
+        };
+    }
+
+    private void ResetContants()
+    {
+        viewer.ResetInventoryView(inventory.Equipments.Count);
+        viewer.SetWeapon((weapon == null) ? null : MakeSlotData(weapon));
+        viewer.SetArmor((armor == null) ? null : MakeSlotData(armor));
+        viewer.SetAccessory((accessory == null) ? null : MakeSlotData(accessory));
+    }
 
     private void UpdateEquipmentItems()
     {
@@ -147,17 +168,13 @@ public class EquipmentPresenter : UserWidget
     private void SetEquipedWeapon(CInventoryItem_Equipment value)
     {
         UnequipWeapon();
-        inventory.Weapon = value;
+        weapon = value;
 
-        if (inventory.Weapon != null)
+        if (weapon != null)
         {
-            viewer.SetWeapon(new SlotViewerData
-            {
-                DisplayName = value.DisplayName,
-                ItemCount = 1
-            });
+            viewer.SetWeapon(MakeSlotData(value));
 
-            statusWeapon.SetLocal(inventory.Weapon.Status);
+            statusWeapon.SetLocal(weapon.Status);
             UpdateStatus();
         }
     }
@@ -165,15 +182,11 @@ public class EquipmentPresenter : UserWidget
     private void SetEquipedArmor(CInventoryItem_Equipment value)
     {
         UnequipArmor();
-        inventory.Armor = value;
+        armor = value;
 
         if (value != null)
         {
-            viewer.SetArmor(new SlotViewerData
-            {
-                DisplayName = value.DisplayName,
-                ItemCount = 1
-            });
+            viewer.SetArmor(MakeSlotData(value));
 
             statusArmor.SetLocal(value.Status);
             UpdateStatus();
@@ -183,17 +196,13 @@ public class EquipmentPresenter : UserWidget
     private void SetEquipedAccessory(CInventoryItem_Equipment value)
     {
         UnequipAccessory();
-        inventory.Accessory = value;
+        accessory = value;
 
-        if (inventory.Accessory != null)
+        if (accessory != null)
         {
-            viewer.SetAccessory(new SlotViewerData
-            {
-                DisplayName = value.DisplayName,
-                ItemCount = 1
-            });
+            viewer.SetAccessory(MakeSlotData(value));
 
-            statusWeapon.SetLocal(inventory.Accessory.Status);
+            statusWeapon.SetLocal(accessory.Status);
             UpdateStatus();
         }
     }

@@ -15,20 +15,25 @@ public class SlotViewer : MonoBehaviour
 
     public void SetSlotData(in SlotViewerData data)
     {
+        button.interactable = true;
+
         if (data == null)
         {
             textName.text = emptyData;
-            button.interactable = true;
             return;
         }
 
-        textName.text = data.DisplayName;
-        button.interactable = true;
+        textName.text = string.Format(itemFormatText, data.DisplayName, data.ItemCount);
+    }
+
+    public void SetEmpty()
+    {
+        textName.text = emptyData;
+        button.interactable = false;
     }
 
     public void DisableButton()
     {
-        textName.text = emptyData;
         button.interactable = false;
     }
 
@@ -36,6 +41,8 @@ public class SlotViewer : MonoBehaviour
     [SerializeField] private Text textName;
     [SerializeField] private Button button;
     [SerializeField] private string emptyData = "¾øÀ½";
+    // 0 : ItemName, 1 : ItemCount
+    [SerializeField] private string itemFormatText = "{0} {1}°³";
 
 
 }

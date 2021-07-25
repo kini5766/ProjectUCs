@@ -6,10 +6,6 @@ using static UCsWorld;
 
 public class Inventory : MonoBehaviour
 {
-    public CInventoryItem_Equipment Weapon { get => weapon; set => weapon = value; }
-    public CInventoryItem_Equipment Armor { get => armor; set => armor = value; }
-    public CInventoryItem_Equipment Accessory { get => accessory; set => accessory = value; }
-
     public List<CInventoryItem_Equipment> Equipments => equipmentItems;
     public List<CInventoryItem_Consumable> Consumables => consumableItems;
 
@@ -29,9 +25,7 @@ public class Inventory : MonoBehaviour
 
     private readonly List<CInventoryItem_Equipment> equipmentItems = new List<CInventoryItem_Equipment>();
     private readonly List<CInventoryItem_Consumable> consumableItems = new List<CInventoryItem_Consumable>();
-    private CInventoryItem_Equipment weapon;
-    private CInventoryItem_Equipment armor;
-    private CInventoryItem_Equipment accessory;
+
 
 
     private void AddItemEquipment(CInventroyItemDesc item)
@@ -54,6 +48,16 @@ public class Inventory : MonoBehaviour
     private void AddItemConsumable(CInventroyItemDesc item, int itemCount)
     {
         CInteractorDesc interactorDesc = DataTable.InteractorTable[item.ItemID];
+
+        foreach (CInventoryItem_Consumable consum in consumableItems)
+        {
+            if (consum.ItemID == item.ItemID)
+            {
+                // 이미 같은 물건을 가지고 있다면 개수 추가
+                consum.AddStock(itemCount);
+                return;
+            }
+        }
 
         CConsumableDesc desc = DataTable.ConsumableTable[item.ItemID];
         if (desc == null)
