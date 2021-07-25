@@ -255,7 +255,7 @@ public class EquipmentPresenter : UserWidget
 
         viewer.SetAccessory(MakeSlotData(value));
 
-        statusWeapon.SetLocal(accessory.Status);
+        statusAccessory.SetLocal(accessory.Status);
         UpdateStatus();
     }
 
