@@ -4,7 +4,7 @@
 unity버전2020.3.14f1
 
 
-씬 : SceneInteractor.unity
+씬 : SceneOverview.unity
 화면 회전 : 마우스 이동
 
 캐릭터 이동
