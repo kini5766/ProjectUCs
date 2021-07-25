@@ -5,13 +5,23 @@ using UnityEngine;
 public class ConsumablePresenter : UserWidget
 {
     [SerializeField] ConsumableViewer viewer;
+    [SerializeField] HudQuickSlotGroup hud;
     private Inventory inventory;
 
-    private CInventoryItem_Consumable[] quicks = new CInventoryItem_Consumable[4];
+    private readonly CInventoryItem_Consumable[] quicks = new CInventoryItem_Consumable[4];
     private CInventoryItem_Consumable selectingTarget = null;
 
 
     #region MonoBehaviour
+
+    private void Awake()
+    {
+        int length = quicks.Length;
+        for (int i = 0; i < length; ++i)
+        {
+            hud.SetEmpty(i);
+        }
+    }
 
     private void Start()
     {
@@ -35,6 +45,29 @@ public class ConsumablePresenter : UserWidget
         viewer.ResetContents(inventory.Equipments.Count, MakeQuickSlotDatas());
 
         base.Visible();
+    }
+
+    public override void Hidden()
+    {
+        base.Hidden();
+
+        int length = quicks.Length;
+        for (int i = 0; i < length; ++i)
+        {
+            if (quicks[i] == null)
+            {
+                hud.SetEmpty(i);
+            }
+            else
+            {
+                hud.SetData(new QuickSlotData
+                {
+                    Index = i,
+                    DisplayName = quicks[i].DisplayName,
+                    ItemCount = quicks[i].Stock
+                });
+            }
+        }
     }
 
     #endregion

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ScreenManager : MonoBehaviour
 {
+    [SerializeField] private Canvas hud;
     [SerializeField] private ScreenMenu screenMenu;
     [SerializeField] private ScreenTalkable screenTalkable;
     private UserWidget openedScreen;
@@ -59,12 +60,12 @@ public class ScreenManager : MonoBehaviour
 
     private void OpenHuds()
     {
-
+        hud.enabled = true;
     }
 
     private void CloseHuds()
     {
-
+        hud.enabled = false;
     }
 
 }

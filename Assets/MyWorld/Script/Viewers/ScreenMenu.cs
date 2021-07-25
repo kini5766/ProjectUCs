@@ -27,16 +27,18 @@ public class ScreenMenu : UserWidget
     [SerializeField] private UserWidget consumableViewer;
     private UserWidget currViewing;
 
-    private void Awake()
-    {
-        OnMain();
-    }
-
     public override void Visible()
     {
-        base.Visible();
-
         OnMain();
+        
+        base.Visible();
+    }
+
+    public override void Hidden()
+    {
+        base.Hidden();
+
+        SetViewing(null);
     }
 
 
