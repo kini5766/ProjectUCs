@@ -110,15 +110,15 @@ public class Player : MonoBehaviour
     // playerOnly.Input.MenuPressed.AddListener
     private void OnMenu()
     {
-        if (GetHUD().IsOpenedMenu())
+        if (GetScreen().IsOpenedMenu())
         {
             playerOnly.Input.HiddenMouse();
-            GetHUD().CloseMenu();
+            GetScreen().CloseMenu();
         }
         else
         {
             playerOnly.Input.VisibleMouse();
-            GetHUD().OpenMenu();
+            GetScreen().OpenMenu();
         }
     }
 

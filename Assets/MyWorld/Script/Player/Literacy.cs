@@ -19,14 +19,14 @@ public class Literacy : MonoBehaviour
         state.SetStop();
         contacted.BeginTalk(this);
 
-        GetHUD().OpenTalk();
+        GetScreen().OpenTalk();
 
         return NextTalk();
     }
 
     public void CancelTalk()
     {
-        GetHUD().CloseTalk();
+        GetScreen().CloseTalk();
 
         if (contacted == null)
         {
@@ -64,7 +64,7 @@ public class Literacy : MonoBehaviour
             name = desc.DisplayName;
 
         contacted.TalkNext(ment.NextMentID);
-        GetHUD().HudTalkable.SetMent(name, ment.Ment);
+        GetScreen().HudTalkable.SetMent(name, ment.Ment);
 
         return true;
     }
