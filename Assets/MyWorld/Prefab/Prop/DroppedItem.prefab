@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8188f90864fcb746803c01b483e1330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: ChickenBlade
+  itemID: Bomb
   itemCount: 1
   interactor: {fileID: 4218667240618889739}
   nameViewer: {fileID: 4218667239310304528}

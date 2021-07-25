@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour
     public CInventoryItem_Equipment Accessory { get => accessory; set => accessory = value; }
 
     public List<CInventoryItem_Equipment> Equipments => equipmentItems;
-    public List<CInventoryItem> Consumables => consumableItems;
+    public List<CInventoryItem_Consumable> Consumables => consumableItems;
 
     public void AddItem(string itemID, int itemCount)
     {
@@ -22,13 +22,13 @@ public class Inventory : MonoBehaviour
         switch (desc.ItemType)
         {
             case EItemType.Equipment: AddItemEquipment(desc); break;
-            default: AddItemConsumable(desc, itemCount); break;
+            case EItemType.Consumable: AddItemConsumable(desc, itemCount); break;
         }
     }
 
 
     private readonly List<CInventoryItem_Equipment> equipmentItems = new List<CInventoryItem_Equipment>();
-    private readonly List<CInventoryItem> consumableItems = new List<CInventoryItem>();
+    private readonly List<CInventoryItem_Consumable> consumableItems = new List<CInventoryItem_Consumable>();
     private CInventoryItem_Equipment weapon;
     private CInventoryItem_Equipment armor;
     private CInventoryItem_Equipment accessory;
@@ -54,14 +54,18 @@ public class Inventory : MonoBehaviour
     private void AddItemConsumable(CInventroyItemDesc item, int itemCount)
     {
         CInteractorDesc interactorDesc = DataTable.InteractorTable[item.ItemID];
-        
+
+        CConsumableDesc desc = DataTable.ConsumableTable[item.ItemID];
+        if (desc == null)
+            return;
+
         string displayName;
         if (interactorDesc != null)
             displayName = interactorDesc.DisplayName;
         else
             displayName = item.ItemID;
 
-        consumableItems.Add(new CInventoryItem(item, displayName));
+        consumableItems.Add(new CInventoryItem_Consumable(item, displayName, desc, itemCount));
     }
 
 }
