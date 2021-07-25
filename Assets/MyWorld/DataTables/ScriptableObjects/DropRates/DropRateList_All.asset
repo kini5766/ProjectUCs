@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rateLists:
   - DropperList: {fileID: 11400000, guid: a2737f497e0e6194fa20fe869abbf881, type: 2}
-    DropRate: 1
+    DropRate: 2
   - DropperList: {fileID: 11400000, guid: 20f0f8445e74b2f4ca20abc43fe0f998, type: 2}
     DropRate: 1
   - DropperList: {fileID: 11400000, guid: 4abca83dddea6864e84cd3f8a7554da0, type: 2}
-    DropRate: 1
+    DropRate: 0.5
   - DropperList: {fileID: 11400000, guid: 710c533e114f2f343b8e75f1be5b1825, type: 2}
-    DropRate: 1
+    DropRate: 0.5
   rateItems: []
   emptyRate: 0
