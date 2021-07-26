@@ -78,6 +78,9 @@ public class Player : MonoBehaviour
     // playerOnly.Input.JumpPressed.AddListener
     private void OnJump()
     {
+        if (GetScreen().IsOpenedMenu())
+            return;
+
         if (state.IsIdleMode())
         {
             movement.Jump();
@@ -88,6 +91,9 @@ public class Player : MonoBehaviour
     // playerOnly.Input.RollPressed.AddListener
     private void OnRoll()
     {
+        if (GetScreen().IsOpenedMenu())
+            return;
+
         Begin_Roll();
         // state.SetRollMode();
     }
@@ -95,6 +101,9 @@ public class Player : MonoBehaviour
     // playerOnly.Input.InteractionPressed.AddListener
     private void OnInteraction()
     {
+        if (GetScreen().IsOpenedMenu())
+            return;
+
         if (state.IsTalkMode())
         {
             playerOnly.Literacy.NextTalk();
@@ -114,11 +123,15 @@ public class Player : MonoBehaviour
         {
             playerOnly.Input.HiddenMouse();
             GetScreen().CloseMenu();
+
+            Time.timeScale = 1.0f;
         }
         else
         {
             playerOnly.Input.VisibleMouse();
             GetScreen().OpenMenu();
+
+            Time.timeScale = 0.0f;
         }
     }
 

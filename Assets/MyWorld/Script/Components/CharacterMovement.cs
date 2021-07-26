@@ -128,18 +128,20 @@ public class CharacterMovement : MonoBehaviour
                 velocity.y = 0.0f;
             }
         }
-        else if ((controller.collisionFlags & CollisionFlags.Above) != 0)
-        {
-            // 위쪽 충돌 시 점프힘 무효화
-            if (velocity.y > 0.0f)
-            {
-                velocity.y = 0.0f;
-            }
-        }
         else
         {
             velocity += Time.fixedDeltaTime * Physics.gravity;
+
+            if ((controller.collisionFlags & CollisionFlags.Above) != 0)
+            {
+                // 위쪽 충돌 시 점프힘 무효화
+                if (velocity.y > 0.0f)
+                {
+                    velocity.y = 0.0f;
+                }
+            }
         }
+
     }
 
 
