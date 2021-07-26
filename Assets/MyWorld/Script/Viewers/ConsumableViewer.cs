@@ -10,20 +10,11 @@ public class ConsumableViewer : MonoBehaviour
     public OnSelectedItem OnSelectedQuick => quickSlotGroup.OnSelectedItem;
     public OnSelectedItem OnSelectedBox => selectBox.OnSelectedItem;
 
+    public void ResetInventoryView(int itemCount) 
+        => inventory.ResetContents(itemCount);
 
     public void SetQuickSlotData(int index, in SlotViewerData slotData) 
-        => quickSlotGroup.GetSlot(index).SetSlotData(slotData); 
-
-    public void ResetContents(int count, in List<SlotViewerData> quicks)
-    {
-        inventory.ResetContents(count);
-
-        int size = quicks.Count;
-        for (int i = 0; i < size; ++i)
-        {
-            quickSlotGroup.GetSlot(i).SetSlotData(quicks[i]);
-        }
-    }
+        => quickSlotGroup.GetSlot(index).SetSlotData(slotData);
 
     public void OpenSelecting(in string targetData)
     {

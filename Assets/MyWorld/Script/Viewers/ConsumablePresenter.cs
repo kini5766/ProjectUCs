@@ -32,7 +32,7 @@ public class ConsumablePresenter : UserWidget
         viewer.OnSelectedBox.AddListener(OnSelectedBox);
         viewer.OnSelectedQuick.AddListener(OnSelectedQuick);
 
-        viewer.ResetContents(inventory.Consumables.Count, MakeQuickSlotDatas());
+        ResetContents();
     }
 
     #endregion
@@ -42,7 +42,7 @@ public class ConsumablePresenter : UserWidget
 
     public override void Visible()
     {
-        viewer.ResetContents(inventory.Equipments.Count, MakeQuickSlotDatas());
+        ResetContents();
 
         base.Visible();
     }
@@ -131,10 +131,11 @@ public class ConsumablePresenter : UserWidget
         };
     }
 
-    private List<SlotViewerData> MakeQuickSlotDatas()
+    private void ResetContents()
     {
-        List<SlotViewerData> result = new List<SlotViewerData>();
+        viewer.ResetInventoryView(inventory.Consumables.Count);
 
+        int i = 0;
         foreach (CInventoryItem_Consumable quick in quicks)
         {
             SlotViewerData data = null;
@@ -144,10 +145,9 @@ public class ConsumablePresenter : UserWidget
                 data = MakeSlotData(quick);
             }
 
-            result.Add(data);
+            viewer.SetQuickSlotData(i++, data);
         }
 
-        return result;
     }
 
     #endregion
