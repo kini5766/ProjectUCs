@@ -13,7 +13,7 @@ public struct FRadian
     {
         float pi2 = Mathf.PI * 2.0f;
         float pi3 = Mathf.PI * 3.0f;
-        return ((rad - pi2 % pi2) + pi3 % pi2) - Mathf.PI;
+        return (rad % pi2 + pi3) % pi2 - Mathf.PI;
     }
 
     public static float LerpBetweenTwoAngles(float rad_1, float rad_2, float t)
